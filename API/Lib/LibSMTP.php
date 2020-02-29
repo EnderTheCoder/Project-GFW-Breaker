@@ -1,6 +1,6 @@
 <?php
 /**
- * 一个简单的PHP SMTP 发送邮件类
+ * Ender 2020-02-01
  */
 
 class LibSMTP {

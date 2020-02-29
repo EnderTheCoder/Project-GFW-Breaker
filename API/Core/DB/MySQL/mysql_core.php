@@ -43,7 +43,7 @@ class mysql_core
         try {
             $conn = $this->connect();
             $stmt = $conn->prepare($sql);
-            for ($i = 0; $i < count($params); $i++)
+            for ($i = 1; $i <= count($params); $i++)
                 $stmt->bindValue($i, $params[$i], PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll();

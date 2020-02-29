@@ -1,63 +1,114 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>GFW-Breaker-高速,低价访问外网,翻墙突破封锁</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>GFW-Breaker 高速,超低价,操作简单的突破封锁,连接外网.翻墙/梯子/VPN/科学上网</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link rel="shortcut icon" href="./img/Logo.ico">
+
     <link type="text/css" rel="stylesheet" href="css/index.css">
-    <link rel="shortcut icon" href="img/Logo.ico">
 </head>
 <body>
-
-<!-- 导航栏 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" id="logo">GFW-Breaker</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">官方博客</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    用户中心
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">订阅计划</a>
-                    <a class="dropdown-item" href="#">账单</a>
-                    <a class="dropdown-item" href="#">用户信息</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">退出登录</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">服务与支持</a>
-            </li>
-            <li>
-                <a class="nav-link" href="#">用户调查</a>
-            </li>
-        </ul>
-        <!--        <form class="form-inline my-2 my-lg-0">-->
-        <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-        <!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--        </form>-->
+<ul class="layui-nav" id="nav-list">
+    <li class="layui-nav-item layui-this">
+        <a href="index.html">
+            <img src="img/Logo-Big.png" alt="logo" id="logo">
+        </a>
+    </li>
+    <li class="layui-nav-item"><a href="">最新活动</a></li>
+    <li class="layui-nav-item"><a href="">官方博客</a></li>
+    <li class="layui-nav-item"><a href="">服务支持</a></li>
+    <li class="layui-nav-item"><a href="">用户调查</a></li>
+<!--    <li class="layui-nav-item">-->
+<!--        <a href="">用户中心</a>-->
+<!--        <dl class="layui-nav-child">-->
+<!--            <dd><a href="">订阅计划</a></dd>-->
+<!--            <dd><a href="">用户账单</a></dd>-->
+<!--            <dd><a href="">用户设置</a></dd>-->
+<!--            <dd><a href="">退出登录</a></dd>-->
+<!--        </dl>-->
+<!--    </li>-->
+<!--    <li class="layui-nav-item"><a href="login.html">登录</a></li>-->
+<!--    <li class="layui-nav-item"><a href="register.html">注册</a></li>-->
+</ul>
+<div id="poster" class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md4">
+            世界,
+        </div>
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            与你再次相遇
+        </div>
     </div>
-</nav>
-<div>
-
 </div>
-
-<script src="js/popper.js.1.14.3/content/Scripts/umd/popper.js"></script>
-<script src="js/jquery-3.4.1.js" type="text/javascript"></script>
-<script src="js/bootstrap.js" type="text/javascript"></script>
+<div id="content" class="layui-container">
+    <div class="layui-row" id="show-1">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-1.jpg" alt="宣传图">
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">外贸联络</div>
+            <div class="show-content">GFW-Breaker让您能够无需繁琐的操作,登录即可联络全球客户,以最简单的操作突破封锁,抓住宝贵商机</div>
+        </div>
+    </div>
+    <div class="layui-row" id="show-2">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">技术学习</div>
+            <div class="show-content">GFW-Breaker为您提供访问外网海量资源和知识的机会,让您在各类开发中能够接触到国际顶尖技术</div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-2.jpg" alt="宣传图">
+        </div>
+    </div>
+    <div class="layui-row" id="show-3">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-3.jpg" alt="宣传图">
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">学术自由</div>
+            <div class="show-content">访问wiki,以及各大论文库,使用谷歌进行搜索,利用全球资源为您的学术添砖加瓦</div>
+        </div>
+    </div>
+    <div class="layui-row" id="show-4">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">极速影音</div>
+            <div class="show-content">使用自行研发的协议并应用最新技术,让您能够以最高画质无卡顿观看Youtube,NetFlix等国外各大视频网站</div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-4.png" alt="宣传图">
+        </div>
+    </div>
+    <div class="layui-row" id="show-5">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-5.jpg" alt="宣传图">
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">绅士交流</div>
+            <div class="show-content">高清无码的高质量电影能够提供国内小网站无法提供的快感</div>
+        </div>
+    </div>
+    <div class="layui-row" id="show-6">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">国际社交</div>
+            <div class="show-content">使用Facebook,ins,Twitter等国际社交媒体来追随您喜爱的国际明星,结交各国朋友</div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-6.jpg" alt="宣传图">
+        </div>
+    </div>
+    <div class="layui-row" id="show-7">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+            <img src="img/show-7.png" alt="宣传图">
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md8">
+            <div class="show-title">国际新闻</div>
+            <div class="show-content">获取各路国际媒体的最新报道与消息,了解国际局势</div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/index.js"></script>
+<script src="layui/layui.all.js"></script>
 </body>
 </html>

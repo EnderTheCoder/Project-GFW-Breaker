@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>GFW-Breaker 注册</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link rel="shortcut icon" href="./img/Logo.ico">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="form-border">
+    <div id="form-title">
+        注册
+    </div>
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="username">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" required lay-verify="required|username" placeholder="数字+字母组合"
+                       class="layui-input" id="username">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="email">邮箱</label>
+            <div class="layui-input-block">
+                <input type="email" name="email" required lay-verify="required|email" placeholder="数字+字母组合"
+                       class="layui-input" id="email">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="password">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" required lay-verify="required|password" placeholder="请输入密码"
+                       class="layui-input" id="password">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="re-password">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="re_password" required lay-verify="required" placeholder="请再次输入密码"
+                       class="layui-input" id="re-password">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-fluid" lay-filter="register" lay-submit>注册</button>
+    </form>
+</div>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/jquery.md5.js"></script>
+<script src="js/custom.functions.js"></script>
+<script src="layui/layui.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

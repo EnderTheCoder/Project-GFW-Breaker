@@ -1,0 +1,40 @@
+.navbar-brand img {
+    height: 40px;
+}
+
+#index-poster {
+    height: calc(100vh - 66px);
+    width: 100vw;
+    background: #343a40;
+}
+
+
+#index-poster .row {
+    padding-top: calc(30vh);
+}
+
+#index-poster .row div {
+    font-size: 10vw;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #5a6068;
+}
+
+body {
+    background-color: #343a40;
+}
+
+#form-border {
+    color: #8D8D8D;
+    margin-top: calc(50vh - 200px);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#form-title {
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 50px;
+}

@@ -9,8 +9,7 @@ class return_core
         ),
         'jump' => array(
             'code' => 101,
-            'msg' => '请求成功，即将跳转',
-            'location' => URL,
+            'msg' => '请求成功，即将跳转'
         ),
         'signErr' => array(
             'code' => 201,
@@ -26,7 +25,7 @@ class return_core
         ),
         'stateUnavailable' => array(
             'code' => 204,
-            'msg' => '短信请求次数达到上限！',
+            'msg' => '状态不正确！',
         ),
         'emailMaxLimReached' => array(
             'code' => 205,
@@ -56,7 +55,7 @@ class return_core
             'code' => 211,
             'msg' => '验证码错误'
         ),
-        'duplicateVal' => array(
+        'dupVal' => array(
             'code' => 212,
             'msg' => '重复的值',
         ),
@@ -80,8 +79,6 @@ class return_core
             'code' => 217,
             'msg' => '结果不存在',
         ),
-
-
         'dbgMsg' => array(
             'code' => 300,
             'msg' => '预留调试代码',
@@ -102,7 +99,7 @@ class return_core
 
     public function setVal($key, $value)
     {
-        $this->retVal[$key] = $value;
+        $this->retVal['data'][$key] = $value;
     }
 
     public function attachParams($params)
@@ -115,12 +112,12 @@ class return_core
         $this->jsonReturn($this->retVal);
     }
 
-    public function retMsg($type, $result = null, $msg = null)
+    public function retMsg($type, $data = null, $msg = null)
     {
         if (isEmpty($this->code[$type])) $ret = $this->code['dbgMsg'];
         else $ret = $this->code[$type];
-        if ($result)
-            $ret = array_merge($ret, $result);
+        if ($data)
+            $ret['data'] = $data;
         if ($msg) $ret['msg'] = $msg;
         $this->jsonReturn($ret);
     }
