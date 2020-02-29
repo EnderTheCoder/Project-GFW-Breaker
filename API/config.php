@@ -1,11 +1,11 @@
 <?php
 //Site Settings
-define("URL", "http://localhost");
-define("API", "http://locahost/API");
+define("URL", "http://gb.yishugou.shop");
+define("API", "http://gb.yishugou.shop/API");
 //DB Settings
 define("DB_HOST", "localhost");
 define("DB_NAME", "GFW-Breaker");
-define("DB_USERNAME", "Ender");
+define("DB_USERNAME", "ender");
 define("DB_PASSWORD", "Feng,HK,4778!");
 define("PREFIX", 'main_');
 //Email Settings
