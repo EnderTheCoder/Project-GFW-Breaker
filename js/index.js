@@ -7,7 +7,7 @@ $.ajax({
     timeout: 5000,
     success: function (result) {
         let json = eval(result);
-        if (json['data']['isLogin']) area.append('<li class="layui-nav-item"><a href="">用户调查</a></li>\n' +
+        if (json['data']['isLogin']) area.append(
             '        <li class="layui-nav-item">\n' +
             '            <a href="">用户中心</a>\n' +
             '            <dl class="layui-nav-child">\n' +
