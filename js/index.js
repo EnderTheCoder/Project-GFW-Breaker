@@ -1,4 +1,6 @@
 const area = $("#nav-list");
+if (getQueryString('action') === 'quit')
+    $.ajax({url: 'API/loginDisable.php', type: 'GET', async: false});
 $.ajax({
     url: 'API/loginCheck.php',
     type: "POST",
@@ -14,7 +16,7 @@ $.ajax({
             '                <dd><a href="">订阅计划</a></dd>\n' +
             '                <dd><a href="">用户账单</a></dd>\n' +
             '                <dd><a href="">用户设置</a></dd>\n' +
-            '                <dd><a href="">退出登录</a></dd>\n' +
+            '                <dd><a href="index.html?action=quit">退出登录</a></dd>\n' +
             '            </dl>\n' +
             '        </li>');
         else area.append('<li class="layui-nav-item"><a href="login.html">登录</a></li>\n' +
