@@ -11,11 +11,13 @@ require 'Core/Data/return_core.php';
 require 'Lib/LibSMTP.php';
 require 'Core/custom_functions.php';
 require 'Core/Security/token_core.php';
+require 'Core/DB/Redis/redis_core.php';
 session_start();
 $sign = new sign_core();
 $mysql = new mysql_core();
 $return = new return_core();
 $token = new token_core();
+$redis = new redis_core();
 $sign->initParams($_POST);
 if ($sign->checkSign() !== true) {
     $return->retMsg($sign->checkSign());
@@ -78,8 +80,13 @@ switch ($_POST['type']) {
         );
         $mysql->bind_query($sql, $params);
         $url = URL . '/email.html?email_token=' . $email_token;
-        $msg = '<a href="' . URL . '">[GFW-BREAKER]</a>尊敬的新用户' . $_POST['username'] . '您好,感谢您在本站的注册,请打开下方链接完成邮箱验证.<br><a href="' . $url . '">' . $url . '</a>';
-        sendMail($_POST['email'], '完成您在[GFW-BREAKER]的注册', $msg);
+//        sendMail($_POST['email'], '完成您在[GFW-BREAKER]的注册', $msg);
+        $email_task = array(
+            'email' => $_POST['email'],
+            'title' => '完成您在[GFW-BREAKER]的注册',
+            'content' => '<a href="' . URL . '">[GFW-BREAKER]</a>尊敬的新用户' . $_POST['username'] . '您好,感谢您在本站的注册,请打开下方链接完成邮箱验证.<br><a href="' . $url . '">' . $url . '</a>',
+        );
+        $redis->queue_insert('email', $email_task);
         if ($mysql->isError()) $return->retMsg('dbErr', $mysql->getError());
 //        if ($_POST['do_login']) $token->setToken($mysql->getId(), $_POST['username']);
         $return->retMsg('success');

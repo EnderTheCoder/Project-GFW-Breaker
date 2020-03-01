@@ -30,7 +30,7 @@ layui.use('form', function () {
             url: 'API/identify.php',
             type: "POST",
             dataType: 'json',
-            async: true,
+            async: false,
             timeout: 5000,
             data: data.field,
             success: function (result) {
