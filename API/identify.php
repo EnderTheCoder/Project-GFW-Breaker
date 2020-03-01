@@ -41,6 +41,23 @@ switch ($_POST['type']) {
     case 'register':
         if (isEmpty($_POST['username']) || isEmpty($_POST['password']) || isEmpty($_POST['email']))
             $return->retMsg('emptyParam');
+        $sql = 'SELECT username, email FROM main_users WHERE username = ? OR email = ?';
+        $params = array(1 => $_POST['username'], 2 => $_POST['email']);
+        $result = $mysql->bind_query($sql, $params);
+        if (count($result)) {
+            $return->setType('dupVal');
+            for ($i = 0; $i < count($result); $i++) {
+                if ($result[$i]['username'] == $_POST['username']) {
+                    $return->setVal('key', 'username');
+                    $return->run();
+                }
+                if ($result[$i]['email'] == $_POST['email']) {
+                    $return->setVal('key', 'email');
+                    $return->run();
+                }
+            }
+        }
+        if ($result[0][$_POST['key']]) $return->retMsg('dupVal');
         $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time) VALUES (?, ?, ?, ?, ?, ?)';
         $params = array(
             1 => $_POST['username'],
