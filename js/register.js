@@ -11,50 +11,6 @@ layui.use('form', function () {
             if (/^\d+\d+\d$/.test(value)) {
                 return '用户名不能全为数字';
             }
-            let json = {};
-            json.app_id = 1;
-            json.timestamp = getUnixTS();
-            json.type = 'dupCheck';
-            json.key = 'username';
-            json.value = value;
-            json.sign = $.md5('app_id1key' + json.key + 'timestamp' + json.timestamp + 'type' + json.type + 'value' + json.value + '6ab43fb5a4d624f9fa000bc83ccef011');
-            json.sign = json.sign.toUpperCase();
-            $.ajax({
-                url: 'API/identify.php',
-                type: "POST",
-                dataType: 'json',
-                async: false,
-                timeout: 5000,
-                data: json,
-                success: function (result) {
-                    let json = eval(result);
-                    if (json['code'] !== 100)
-                        return '该用户名已被注册!请更换未注册用户名';
-                },
-                error: function () {
-
-                }
-            });
-            json.key = 'email';
-            json.value = $('#email').val();
-            json.sign = $.md5('app_id1key' + json.key + 'timestamp' + json.timestamp + 'type' + json.type + 'value' + json.value + '6ab43fb5a4d624f9fa000bc83ccef011');
-            json.sign = json.sign.toUpperCase();
-            $.ajax({
-                url: 'API/identify.php',
-                type: "POST",
-                dataType: 'json',
-                async: false,
-                timeout: 5000,
-                data: json,
-                success: function (result) {
-                    let json = eval(result);
-                    if (json['code'] !== 100)
-                        return '该邮箱已被注册!请更换未注册邮箱';
-                },
-                error: function () {
-
-                }
-            });
         },
         password: function (value, item) {
             if (value !== $('#re-password').val())
@@ -79,11 +35,21 @@ layui.use('form', function () {
             data: data.field,
             success: function (result) {
                 let json = eval(result);
-                if (json['code'] === 100) {
-                    layer.msg('注册成功,请到邮箱查收验证连接后登录');
-                    window.location.href = 'login.html';
-                } else {
-                    layer.msg('发生了未知的错误!');
+                switch (json['code']) {
+                    case 212:
+                        if (json['data']['key'] === 'username')
+                            layer.alert('该用户名已被注册，请更换');
+                        if (json['data']['key'] === 'email')
+                            layer.alert('该邮箱已被注册，请更换');
+                        return false;
+                    case 100:
+                        layer.open({
+                            title: '注册成功'
+                            , content: '您的注册已经通过，请打开您的邮箱查收验证邮件以激活此账户'
+                        });
+                        break;
+                    default:
+                        layer.msg('奇怪的错误增加了！');
                 }
             },
             error: function () {
