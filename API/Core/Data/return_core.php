@@ -25,11 +25,11 @@ class return_core
         ),
         'stateUnavailable' => array(
             'code' => 204,
-            'msg' => '状态不正确！',
+            'msg' => '状态不正确',
         ),
-        'emailMaxLimReached' => array(
+        'limReached' => array(
             'code' => 205,
-            'msg' => '邮箱请求次数达到上线！',
+            'msg' => '邮箱请求次数达到上限',
         ),
         'signOvertime' => array(
             'code' => 206,
@@ -39,44 +39,40 @@ class return_core
             'code' => 207,
             'msg' => '认证未通过',
         ),
-        'unverifiedEmail' => array(
-            'code' => 208,
-            'msg' => '该邮箱未经认证',
-        ),
         'emailServerErr' => array(
-            'code' => 209,
+            'code' => 208,
             'msg' => '邮件服务器发生错误或邮件地址错误'
         ),
         'smsServerErr' => array(
-            'code' => 210,
+            'code' => 209,
             'msg' => '短信服务发生错误'
         ),
         'captchaErr' => array(
-            'code' => 211,
+            'code' => 210,
             'msg' => '验证码错误'
         ),
         'dupVal' => array(
-            'code' => 212,
+            'code' => 211,
             'msg' => '重复的值',
         ),
         'formatErr' => array(
-            'code' => 213,
+            'code' => 212,
             'msg' => '格式错误'
         ),
         'requestTooFast' => array(
-            'code' => 214,
+            'code' => 213,
             'msg' => '请求速度过快',
         ),
         'entryErr' => array(
-            'code' => 215,
+            'code' => 214,
             'msg' => '登入点错误',
         ),
         'paramErr' => array(
-            'code' => 216,
+            'code' => 215,
             'msg' => '参数格式错误'
         ),
         'noResult' => array(
-            'code' => 217,
+            'code' => 216,
             'msg' => '结果不存在',
         ),
         'dbgMsg' => array(
