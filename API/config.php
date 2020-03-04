@@ -1,7 +1,7 @@
 <?php
 //Site Settings
-define("URL", "http://gb.yishugou.shop");
-define("API", "http://gb.yishugou.shop/API");
+define("URL", "http://www.breakerg.com");
+define("API", "http://www.breakerg.com/API");
 //DB Settings
 define("DB_HOST", "localhost");
 define("DB_NAME", "GFW-Breaker");
