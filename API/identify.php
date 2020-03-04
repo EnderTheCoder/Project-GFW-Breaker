@@ -60,6 +60,7 @@ switch ($_POST['type']) {
                 }
             }
         }
+        $_COOKIE = null;
         if ($result[0][$_POST['key']]) $return->retMsg('dupVal');
         $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time) VALUES (?, ?, ?, ?, ?, ?)';
         $params = array(
@@ -67,7 +68,8 @@ switch ($_POST['type']) {
             2 => md5($_POST['password'] . PASSWORD_SALT),
             3 => $_SERVER['REMOTE_ADDR'],
             4 => $_POST['email'],
-            5 => '您的邮箱尚未验证,请前往邮箱查收验证链接',
+//          5 => '您的邮箱尚未验证,请前往邮箱查收验证链接',
+            5 => null,
             6 => time()
         );
         $mysql->bind_query($sql, $params);
