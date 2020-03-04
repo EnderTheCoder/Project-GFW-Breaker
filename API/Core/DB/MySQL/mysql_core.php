@@ -37,7 +37,7 @@ class mysql_core
         return true;
     }
 
-    //使用绑定参数执行带有输入的sql语句
+    //使用绑定参数执行带有输入的sql语句,$sql是sql语句,$params是参数数组
     public function bind_query($sql, $params = null)
     {
         try {

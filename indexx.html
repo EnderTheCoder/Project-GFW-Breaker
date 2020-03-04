@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui.form小例子</title>
+</head>
+<body>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/jquery.md5.js"></script>
+<script src="js/jquery.base64.js"></script>
+<script src="js/custom.functions.js"></script>
+<script>
+    let json = {};
+    json.app_id = 1;
+    json.email = '10203068@qq.com';
+    json.head = '阿萨德asd123阿萨德';
+    json.body = '阿萨德asd123阿萨德';
+    json.timestamp = getUnixTS();
+    let str = 'app_id' + json.app_id + 'body' + json.body + 'email' + json.email + 'head' + json.head + 'timestamp' + json.timestamp + 'bbc9a26ded02af12866784448a8cb0e5';
+    console.info(str);
+    json.sign = $.md5(str);
+    console.info(json.sign);
+    json.sign = json.sign.toUpperCase();
+    let submit_data = 'app_id=' + json.app_id + '&body=' + encodeURI(json.body) + '&email=' + encodeURI(json.email) + '&head=' + encodeURI(json.head) + '&timestamp=' + json.timestamp + '&sign=' + json.sign;
+    console.info(submit_data);
+    $.ajax({
+        url: 'https://api.aiim.ren/Email_API.php',
+        type: "POST",
+        dataType: 'json',
+        async: true,
+        timeout: 5000,
+        data: submit_data,
+        success: function (result) {
+            console.log(result);
+        },
+        error: function () {
+
+        }
+    });
+</script>
+</body>
+</html>
