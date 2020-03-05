@@ -38,3 +38,33 @@ body {
     text-align: center;
     padding-bottom: 50px;
 }
+
+.layui-nav img {
+    height: 60px;
+}
+
+.blog-frame {
+    padding-top: 50px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+
+.blog-block {
+    background-color: #6f42c1;
+    width: 300px;
+    padding: 10px;
+    box-shadow: 10px 10px 5px #222222;
+}
+
+.blog-block h1 {
+    color: #cccccc;
+    font-weight: bold;
+    text-align: center;
+}
+
+.blog-block p {
+    color: #222222;
+    font-weight: bold;
+
+}
