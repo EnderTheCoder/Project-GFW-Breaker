@@ -12,11 +12,13 @@ class sign_core
     private function getKey($app_id)
     {
         $mysql = new mysql_core();
-        $sql = 'SELECT app_key FROM main_apps WHERE app_id = ?';
+        $sql = 'SELECT app_key, state, name FROM main_apps WHERE app_id = ?';
         $params = array();
         $params[1] = $app_id;
         $result = $mysql->bind_query($sql, $params);
         $this->key = $result[0][0];
+        $_SESSION['device'] = $result[0]['name'];
+        if ($result[0][1] != 1) $this->result = 'apiClosed';
     }
 
     //根据数据，生成签名
@@ -51,7 +53,7 @@ class sign_core
         ksort($origin);
         $this->params = $origin;
         $this->getKey($origin['app_id']);
-        $this->result = true;
+        if ($this->result == null) $this->result = true;
     }
 
     //获取已经计算完成的签名

@@ -75,6 +75,10 @@ class return_core
             'code' => 216,
             'msg' => '结果不存在',
         ),
+        'apiClosed' => array(
+            'code' => 217,
+            'msg' => '接口已被关闭'
+        ),
         'dbgMsg' => array(
             'code' => 300,
             'msg' => '预留调试代码',
@@ -114,6 +118,7 @@ class return_core
         else $ret = $this->code[$type];
         if ($data)
             $ret['data'] = $data;
+        else $ret['data'] = array();
         if ($msg) $ret['msg'] = $msg;
         $this->jsonReturn($ret);
     }
