@@ -29,6 +29,14 @@ switch ($_POST['type']) {
         else $result['row'] = 0;
         $return->retMsg('success', $result);
         break;
+    case 'single':
+        $sql = 'SELECT id, title, content, author, timestamp FROM main_blog WHERE id = ?';
+        $params = array(
+            1 => $_POST['id'],
+        );
+        $result = $mysql->bind_query($sql, $params);
+        $return->retMsg('success', $result);
+        break;
     default:
         $return->retMsg('paramErr');
 }

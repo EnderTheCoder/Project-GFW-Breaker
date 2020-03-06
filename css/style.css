@@ -40,7 +40,7 @@ body {
 }
 
 .layui-nav img {
-    height: 60px;
+    height: 58px;
 }
 
 .blog-frame {
@@ -66,5 +66,29 @@ body {
 .blog-block p {
     color: #222222;
     font-weight: bold;
+}
 
+#blog-title {
+    text-align: center;
+    font-size: 40px;
+    line-height: 100px;
+    color: #6f42c1;
+}
+
+#blog-author {
+    text-align: center;
+    color: #5a6268;
+}
+
+#blog-time {
+    text-align: center;
+    color: #5a6268;
+}
+
+#blog-content {
+    color: #cccccc;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
 }
