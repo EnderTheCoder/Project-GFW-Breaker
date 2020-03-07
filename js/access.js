@@ -1,0 +1,1 @@
+$.ajax({url: 'API/accessLog.php', type: "POST", dataType: 'json', timeout: 5000, data: {'referer': document.referrer},});

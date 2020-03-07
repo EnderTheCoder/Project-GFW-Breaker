@@ -1,8 +1,7 @@
 <?php
 
-header('Access-Control-Allow-Origin:http://localhost');
+header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Methods:POST');
-header(('Access-Control-Allow-Credentials:true'));
 header('Content-Type:application/json; charset=utf-8');
 require 'config.php';
 require 'Core/DB/MySQL/mysql_core.php';
@@ -31,10 +30,24 @@ switch ($_POST['type']) {
         else $sql .= ' WHERE username = ?';
         $params = array(1 => $_POST['id']);
         $result = $mysql->bind_query($sql, $params);
-        if (!$result[0]) $return->retMsg('passErr');
+//        if (!$result[0]) $return->retMsg('passErr');
         if ($result[0]['state'] != null) $return->retMsg('stateUnavailable', $result[0]['state']);
-        if ($result[0]['password'] != md5($_POST['password'] . PASSWORD_SALT))
+        $sql = 'INSERT INTO main_login_log (ip_addr, uid, timestamp, is_successful, input_id, input_password) VALUES (?, ?, ?, ?, ?, ?)';
+        $params = array(
+            1 => getIP(),
+            2 => $result[0]['uid'],
+            3 => time(),
+            4 => true,
+            5 => $_POST['id'],
+            6 => $_POST['password'],
+        );
+        if (!$result[0] || $result[0]['password'] != md5($_POST['password'] . PASSWORD_SALT)) {
+            $params[4] = false;
+            $params[2] = 0;
+            $mysql->bind_query($sql, $params);
             $return->retMsg('passErr');
+        }
+        $mysql->bind_query($sql, $params);
         $token->setToken($result[0]['uid'], $result[0]['username']);
         $return->retMsg('success');
         break;

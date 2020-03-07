@@ -21,3 +21,24 @@ function sendMail($remoteEmail, $title, $body)
     $mail->setMail($title, $body); //标题和内容
     return $mail->send();//可以var_dump一下，发送成功会返回true，失败false
 }
+
+function getIP(){
+    if (isset($_SERVER)){
+        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $realIP = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        } else if (isset($_SERVER["HTTP_CLIENT_IP"])) {
+            $realIP = $_SERVER["HTTP_CLIENT_IP"];
+        } else {
+            $realIP = $_SERVER["REMOTE_ADDR"];
+        }
+    } else {
+        if (getenv("HTTP_X_FORWARDED_FOR")){
+            $realIP = getenv("HTTP_X_FORWARDED_FOR");
+        } else if (getenv("HTTP_CLIENT_IP")) {
+            $realIP = getenv("HTTP_CLIENT_IP");
+        } else {
+            $realIP = getenv("REMOTE_ADDR");
+        }
+    }
+    return $realIP;
+}

@@ -16,7 +16,12 @@ class token_core
         $this->token = json_decode($redis->get('__token-' . $device . '-' . $uid), true);
     }
 
-    public function judgeToken($uid = false, $device = false, $tokenVal = false)
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function judgeToken($uid = false, $device = 'web', $tokenVal = false)
     {
         if ($tokenVal && $device != 'web') {
             $this->getRedisToken($uid, $device);
