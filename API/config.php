@@ -1,11 +1,11 @@
 <?php
 //Site Settings
-define("URL", "http://localhost");//网站地址
-define("API", "http://locahost/API");//网站api地址
+define("URL", "http://www.breakerg.com");//网站地址
+define("API", "http://www.breakerg.com/API");//网站api地址
 //DB Settings
 define("DB_HOST", "localhost");//数据库主机
 define("DB_NAME", "GFW-Breaker");//默认数据库名
-define("DB_USERNAME", "Ender");//数据库用户名
+define("DB_USERNAME", "ender");//数据库用户名
 define("DB_PASSWORD", "Feng,HK,4778!");//数据库密码
 define("PREFIX", 'main_');
 //Email Settings
