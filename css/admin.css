@@ -1,3 +1,51 @@
 body {
     background-color: #343a40;
 }
+
+.layui-form h1 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 80px;
+    color: #dedede;
+}
+
+#login-form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+    margin-top: calc((100vh - 350px) / 2);
+}
+
+#login-form .layui-input-inline {
+    width: 140px;
+    margin-right: 0;
+}
+
+
+#login-form img {
+    width: 100px;
+    height: 38px;
+    float: left;
+}
+
+.layui-nav-side {
+
+}
+
+#admin-content-area {
+    position: fixed;
+    right: 0;
+    width: calc(100vw - 200px);
+}
+
+.publish-blog {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.publish-blog h1 {
+    color: #cccccc;
+    text-align: center;
+}

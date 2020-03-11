@@ -19,12 +19,10 @@ $token = new token_core();
 $redis = new redis_core();
 $sign->initParams($_POST);
 if ($sign->checkSign() !== true) $return->retMsg($sign->checkSign());
-if (isEmpty($_POST['type']))
-    $return->retMsg('emptyParam');
+if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
 switch ($_POST['type']) {
     case 'login':
-        if (isEmpty($_POST['id']) || isEmpty($_POST['password']))
-            $return->retMsg('emptyParam');
+        if (isEmpty($_POST['id']) || isEmpty($_POST['password'])) $return->retMsg('emptyParam');
         $sql = 'SELECT *  FROM main_users';
         if (strstr($_POST['id'], '@') !== false) $sql .= ' WHERE email = ?';
         else $sql .= ' WHERE username = ?';

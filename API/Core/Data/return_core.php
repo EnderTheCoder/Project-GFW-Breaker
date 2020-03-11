@@ -79,6 +79,10 @@ class return_core
             'code' => 217,
             'msg' => '接口已被关闭'
         ),
+        'fileErr' => array(
+            'code' => 218,
+            'msg' => '文件上传错误！',
+        ),
         'dbgMsg' => array(
             'code' => 300,
             'msg' => '预留调试代码',

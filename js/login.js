@@ -5,6 +5,7 @@ layui.use('form', function () {
         let json_decode = eval(json);
         let app_key = '6ab43fb5a4d624f9fa000bc83ccef011';
         let timestamp = getUnixTS();
+        //title visible summary markdown
         json.sign = $.md5('app_id1id' + json_decode['id'] + 'password' + json_decode['password'] + 'timestamp' + timestamp + 'typelogin' + app_key);
         json.sign = json.sign.toUpperCase();
         json.type = 'login';

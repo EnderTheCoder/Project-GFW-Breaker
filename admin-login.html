@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link type="text/css" rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<form class="layui-form layui-form-pane" action="" id="login-form">
+    <h1>欢迎回来</h1>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="id">用&nbsp;&nbsp;户</label>
+        <div class="layui-input-block">
+            <input type="text" name="id" required lay-verify="required" placeholder="UID/用户名/邮箱"
+                   class="layui-input" id="id">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="password">密&nbsp;&nbsp;码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" required lay-verify="required|password" placeholder="请输入密码"
+                   class="layui-input" id="password">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="captcha">验证码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="captcha" required lay-verify="required" placeholder="请输入图形验证码"
+                   class="layui-input" id="captcha" maxlength="4" autocomplete="off">
+        </div>
+        <img src="API/captcha.php" alt="验证码"
+             onclick="this.src='API/captcha.php?rand=' + Math.random()">
+
+    </div>
+    <button class="layui-btn layui-btn-fluid layui-bg-blue" lay-filter="login" lay-submit>登录</button>
+</form>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/jquery.md5.js"></script>
+<script src="js/jquery.base64.js"></script>
+<script src="js/custom.functions.js"></script>
+<script>
+    layui.use('form', function () {
+        const form = layui.form;
+        form.on('submit(login)', function (data) {
+            let button = $("#login-form button");
+            button.removeClass('layui-bg-blue');
+            button.addClass('layui-btn-disabled');
+            let json = data.field;
+            json.timestamp = getUnixTS();
+            json.type = 'login';
+            json.app_id = 3;
+            json.sign = $.md5('app_id3captcha' + json.captcha + 'id' + json.id + 'password' + json.password + 'timestamp' + json.timestamp + 'type' + json.type + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93');
+            json.sign = json.sign.toUpperCase();
+            $.ajax({
+                url: 'API/admin.php',
+                type: "POST",
+                dataType: 'json',
+                async: false,
+                xhrFields: {withCredentials: true},
+                timeout: 5000,
+                data: json,
+                success: function (result) {
+                    let json = eval(result);
+                    switch (json['code']) {
+                        case 100:
+                            layer.msg("登录成功");
+                            window.parent.location.href = 'admin.html';
+                            break;
+                        case 210:
+                            layer.alert('验证码错误');
+                            break;
+                        case 207:
+                            layer.alert('用户名或密码错误!');
+                            break;
+                        case 214:
+                            layer.alert('您太快了!休息下吧');
+                            break;
+                        default:
+                            layer.alert('奇怪的错误增加了!');
+                    }
+                },
+                error: function () {
+                    layer.alert('发生了未知的错误!');
+                }
+            });
+            button.addClass('layui-bg-blue');
+            button.removeClass('layui-btn-disabled');
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
