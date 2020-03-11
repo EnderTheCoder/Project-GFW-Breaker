@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>GFW-BREAKER-ADMIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>GFW-Breaker 后台管理</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link rel="shortcut icon" href="./img/Logo.ico">
+    <link type="text/css" rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<ul class="layui-nav layui-nav-tree layui-nav-side">
+    <li class="layui-nav-item">
+        <a href="javascript:">日志</a>
+        <dl class="layui-nav-child">
+            <dd><a href="" id="access-log">访问日志</a></dd>
+            <dd><a href="" id="login-log">登录日志</a></dd>
+            <dd><a href="" id="admin-log">管理员日志</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:">博客管理</a>
+        <dl class="layui-nav-child">
+            <dd><a href="admin.html?action=pub">博客总览</a></dd>
+            <dd><a href="admin.html?action=blog-publish">发布博客</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:">用户管理</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">用户设置</a></dd>
+            <dd><a href="">用户列表</a></dd>
+            <dd><a href="">添加用户</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">产品</a></li>
+    <li class="layui-nav-item"><a href="">大数据</a></li>
+</ul>
+<div id="admin-content-area">
+    <form class="layui-form publish-blog layui-form-pane">
+        <h1>发布博客</h1>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="title">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="blog_title" lay-verify="required" placeholder="请输入博客标题" autocomplete="off"
+                       class="layui-input" id="title">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="summary">简述</label>
+            <div class="layui-input-block">
+                <textarea name="blog_summary" placeholder="请输入内容简述" class="layui-textarea" id="summary"
+                          autocomplete="off" lay-verify="required"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="content">内容</label>
+            <div class="layui-input-block">
+                <!--                <input type="file" name="blog_content" autocomplete="off" class="layui-btn"-->
+                <!--                       id="content" lay-verify="required">-->
+                <textarea type="file" name="blog_content" autocomplete="off" class="layui-textarea"
+                          placeholder="请输入markdown格式的文章内容" id="content" lay-verify="required" rows="20"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">可见性</label>
+            <div class="layui-input-block">
+                <input type="radio" name="blog_visibility" value="1" title="立即可见" checked>
+                <input type="radio" name="blog_visibility" value="0" title="仅管理员可见">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-fluid layui-bg-blue" lay-filter="publish_blog" lay-submit>提交</button>
+    </form>
+</div>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/jquery.md5.js"></script>
+<script src="js/custom.functions.js"></script>
+<script src="layui/layui.all.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/blog.publish.js"></script>
+</body>
+</html>

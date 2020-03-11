@@ -92,3 +92,110 @@ body {
     margin-right: auto;
     padding: 30px;
 }
+
+.plan-box {
+
+}
+
+.plan-block {
+    background-color: #6f42c1;
+    width: 280px;
+    height: 400px;
+    box-shadow: 15px 15px 15px 15px #222222;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: #eeeeee;
+}
+
+.plan-block button {
+    margin-bottom: 0;
+}
+
+.plan-block div {
+    line-height: 43px;
+    font-size: 18px;
+}
+
+.plan-block h2 {
+    line-height: 62px;
+    font-weight: bolder;
+}
+
+.plan-box {
+    padding: 20px;
+}
+
+.billing-block {
+    background-color: #dddddd;
+    width: 280px;
+    height: 300px;
+    box-shadow: 15px 15px 15px 15px #222222;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: #eeeeee;
+}
+
+.billing-block h6 {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.billing-block h1 {
+    font-size: 50px;
+    line-height: 80px;
+    /*color: #EE0033;*/
+    /*color: #00CC00;*/
+}
+
+.billing-block p {
+    color: #343a40;
+    line-height: 60px;
+    font-size: 20px;
+}
+
+.cash-top {
+    background-color: #6f42c1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 15px 15px 15px 15px #222222;
+}
+
+.cash-top div {
+    height: 150px;
+    line-height: 150px;
+    font-size: 30px;
+    color: #cccccc;
+    text-align: center;
+}
+
+#billing-a {
+    color: #FFCC33;
+    font-weight: bold;
+}
+
+#billing-b {
+    /*color: #00CC00;*/
+    /*color: #EE0033;*/
+    font-weight: bold;
+}
+
+#billing-c {
+    color: #EE0033;
+    font-weight: bold;
+}
+
+#billing-d {
+    color: #00CC00;
+    font-weight: bold;
+}
+
+.font-color-high {
+    color: #EE0033;
+}
+
+.font-color-low {
+    color: #00CC00;
+}
+

@@ -1,4 +1,7 @@
 <?php
-header('Content-type:image/jpeg');
-$b = imagecreatetruecolor(700,2500);
-imagejpeg($b);
+
+$a = array();
+$a[0] = '你好1';
+$a[1] = '你好2';
+$a[2] = '你好3';
+echo $a[rand(0, 2)];

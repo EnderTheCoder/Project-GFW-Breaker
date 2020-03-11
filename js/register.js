@@ -36,7 +36,7 @@ layui.use('form', function () {
             success: function (result) {
                 let json = eval(result);
                 switch (json['code']) {
-                    case 212:
+                    case 211:
                         if (json['data']['key'] === 'username')
                             layer.alert('该用户名已被注册，请更换');
                         if (json['data']['key'] === 'email')
@@ -47,6 +47,7 @@ layui.use('form', function () {
                             title: '注册成功'
                             , content: '您的注册已经通过，请打开您的邮箱查收验证邮件以激活此账户'
                         });
+                        window.location.href = 'login.html';
                         break;
                     default:
                         layer.msg('奇怪的错误增加了！');

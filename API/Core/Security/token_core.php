@@ -21,6 +21,11 @@ class token_core
         return $this->token;
     }
 
+    public function getVal($key)
+    {
+        return $this->token[$key];
+    }
+
     public function judgeToken($uid = false, $device = 'web', $tokenVal = false)
     {
         if ($tokenVal && $device != 'web') {

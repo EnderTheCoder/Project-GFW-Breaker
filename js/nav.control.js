@@ -9,13 +9,13 @@ $.ajax({
     timeout: 5000,
     success: function (result) {
         let json = eval(result);
-        if (json['data']['isLogin']) area.append(
+        if (json['data']['is_login']) area.append(
             '        <li class="layui-nav-item">\n' +
-            '            <a href="">用户中心</a>\n' +
+            '            <a href="#">用户中心</a>\n' +
             '            <dl class="layui-nav-child">\n' +
-            '                <dd><a href="">订阅计划</a></dd>\n' +
-            '                <dd><a href="">用户账单</a></dd>\n' +
-            '                <dd><a href="">用户设置</a></dd>\n' +
+            '                <dd><a href="usr-center.html?action=plan">订阅计划</a></dd>\n' +
+            '                <dd><a href="usr-center.html?action=billing">用户账单</a></dd>\n' +
+            '                <dd><a href="usr-center.html?action=setting">用户设置</a></dd>\n' +
             '                <dd><a href="index.html?action=quit">退出登录</a></dd>\n' +
             '            </dl>\n' +
             '        </li>');

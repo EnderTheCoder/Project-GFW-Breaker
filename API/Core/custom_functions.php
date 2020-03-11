@@ -22,9 +22,10 @@ function sendMail($remoteEmail, $title, $body)
     return $mail->send();//可以var_dump一下，发送成功会返回true，失败false
 }
 
-function getIP(){
-    if (isset($_SERVER)){
-        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
+function getIP()
+{
+    if (isset($_SERVER)) {
+        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
             $realIP = $_SERVER["HTTP_X_FORWARDED_FOR"];
         } else if (isset($_SERVER["HTTP_CLIENT_IP"])) {
             $realIP = $_SERVER["HTTP_CLIENT_IP"];
@@ -32,7 +33,7 @@ function getIP(){
             $realIP = $_SERVER["REMOTE_ADDR"];
         }
     } else {
-        if (getenv("HTTP_X_FORWARDED_FOR")){
+        if (getenv("HTTP_X_FORWARDED_FOR")) {
             $realIP = getenv("HTTP_X_FORWARDED_FOR");
         } else if (getenv("HTTP_CLIENT_IP")) {
             $realIP = getenv("HTTP_CLIENT_IP");
@@ -41,4 +42,9 @@ function getIP(){
         }
     }
     return $realIP;
+}
+
+function adminStateCheck()
+{
+    return !isEmpty($_SESSION['admin_session']) && $_SESSION['admin_session']['ip_addr'] == getIP();
 }

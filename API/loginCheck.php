@@ -16,5 +16,5 @@ $return = new return_core();
 //$token->setToken(5, 'EnderTheCoder');
 if ($token->judgeToken()) $token->updateToken();
 $return->setType('success');
-$return->setVal('isLogin', $token->judgeToken());
+$return->setVal('is_login', $token->judgeToken());
 $return->run();

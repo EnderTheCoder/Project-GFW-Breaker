@@ -35,3 +35,22 @@ function getDate(val, fmt) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
+function checkLogin() {
+    $.ajax({
+        url: 'API/loginCheck.php',
+        type: "POST",
+        dataType: 'json',
+        async: false,
+        timeout: 3000,
+        success: function (result) {
+            let json = eval(result);
+            return json['data']['is_login'];
+        }
+    });
+    return false;
+}
+
+function booleanToWord(boolean) {
+    return boolean ? 'YES' : 'NO';
+}

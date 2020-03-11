@@ -29,4 +29,22 @@ if ($token->judgeToken()) {
     $params[3] = $token_['uid'];
 }
 $mysql->bind_query($sql, $params);
+$sql = 'SELECT * FROM main_ip_log WHERE ip_addr = ?';
+$params = array(1 => getIP());
+$result = $mysql->bind_query($sql, $params);
+if (!$result) {
+    $sql = 'INSERT INTO main_ip_log(ip_addr, last_update) VALUES (?, ?)';
+    $params = array(
+        1 => getIP(),
+        2 => time(),
+    );
+    $mysql->bind_query($sql, $params);
+} else {
+    $sql = 'UPDATE main_ip_log SET last_update = ?, cnt = cnt + 1 WHERE ip_addr = ?';
+    $params = array(
+        1 => time(),
+        2 => getIP(),
+    );
+    $mysql->bind_query($sql, $params);
+}
 $return->retMsg('success');
