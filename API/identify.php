@@ -46,8 +46,14 @@ switch ($_POST['type']) {
             $return->retMsg('passErr');
         }
         $mysql->bind_query($sql, $params);
-        $token->setToken($result[0]['uid'], $result[0]['username']);
-        $return->retMsg('success');
+        if ($_POST['app_id'] != 1) {
+            $sql = 'SELECT name FROM main_apps WHERE app_id = ?';
+            $params = array(1 => $_POST['app_id']);
+            $device = $mysql->bind_query($sql, $params);
+            $token->setToken($result[0]['uid'], $result[0]['username'], $device[0]['name']);
+        }
+        else $token->setToken($result[0]['uid'], $result[0]['username']);
+        $return->retMsg('success', $token->getToken());
         break;
     case 'register':
         if (isEmpty($_POST['username']) || isEmpty($_POST['password']) || isEmpty($_POST['email']))

@@ -44,5 +44,9 @@ switch ($_POST['type']) {
         $return->retMsg('success', $result);
         break;
     case 'access-log-checkout':
-
+        if (!adminStateCheck()) $return->retMsg('passErr');
+        $sql = 'SELECT * FROM main_access_log ORDER BY id DESC LIMIT 500';
+        $result = $mysql->bind_query($sql);
+        $return->retMsg('success', $result);
+        break;
 }
