@@ -3,7 +3,7 @@
 class mysql_core
 {
     private $con, $isError = false, $ErrorMsg;
-
+    private $result;
     //在实例化对象时连接数据库
     public function __construct()
     {
@@ -47,12 +47,18 @@ class mysql_core
                 for ($i = 1; $i <= count($params); $i++)
                     $stmt->bindValue($i, $params[$i], PDO::PARAM_STR);
             $stmt->execute();
-            return $stmt->fetchAll();
+            $this->result = $stmt->fetchAll();
+            return $this->result;
         } catch (PDOException $exception) {
             $this->isError = true;
             $this->ErrorMsg = '数据库查询错误,错误代码：' . $exception->getCode() . '错误信息：' . $exception->getMessage();
             return $this->ErrorMsg;
         }
+    }
+
+    public function fetchLine($key)
+    {
+        return $this->result[0][$key];
     }
 
     //debug函数，判断是否发生错误

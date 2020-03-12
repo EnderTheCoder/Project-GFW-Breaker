@@ -7,6 +7,7 @@ class sign_core
     protected $key;//从数据库中取出的appkey
     protected $result;
     protected $str;
+    protected $device;
 
     //使用appid从数据库中取出appkey
     private function getKey($app_id)
@@ -18,6 +19,7 @@ class sign_core
         $result = $mysql->bind_query($sql, $params);
         $this->key = $result[0][0];
         $_SESSION['device'] = $result[0]['name'];
+        $this->device = $mysql->fetchLine('name');
         if ($result[0][1] != 1) $this->result = 'apiClosed';
     }
 
@@ -72,6 +74,11 @@ class sign_core
     public function getParams()
     {
         return $this->params;
+    }
+
+    public function getDevice()
+    {
+        return $this->device;
     }
 
     //比对传入签名判断是否正确

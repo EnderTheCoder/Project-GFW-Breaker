@@ -57,6 +57,5 @@ class token_core
             $redis = new redis_core();
             $redis->set('__token-' . $device . '-' . $uid, $json);
         }
-
     }
 }
