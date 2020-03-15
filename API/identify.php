@@ -30,30 +30,22 @@ switch ($_POST['type']) {
         $result = $mysql->bind_query($sql, $params);
 //        if (!$result[0]) $return->retMsg('passErr');
         if ($result[0]['state'] != null) $return->retMsg('stateUnavailable', $result[0]['state']);
-        $sql = 'INSERT INTO main_login_log (ip_addr, uid, timestamp, is_successful, input_id, input_password) VALUES (?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO main_login_log (ip_addr, uid, timestamp, is_successful, device) VALUES (?, ?, ?, ?, ?)';
         $params = array(
             1 => getIP(),
             2 => $result[0]['uid'],
             3 => time(),
-            4 => true,
-            5 => $_POST['id'],
-            6 => $_POST['password'],
+            4 => 1,
+            5 => $sign->getDevice(),
         );
         if (!$result[0] || $result[0]['password'] != md5($_POST['password'] . PASSWORD_SALT)) {
-            $params[4] = false;
+            $params[4] = 0;
             $params[2] = 0;
             $mysql->bind_query($sql, $params);
             $return->retMsg('passErr');
-        }
-        $mysql->bind_query($sql, $params);
-        if ($_POST['app_id'] != 1) {
-            $sql = 'SELECT name FROM main_apps WHERE app_id = ?';
-            $params = array(1 => $_POST['app_id']);
-            $device = $mysql->bind_query($sql, $params);
-            $token->setToken($result[0]['uid'], $result[0]['username'], $device[0]['name']);
-        }
-        else $token->setToken($result[0]['uid'], $result[0]['username']);
-        $return->retMsg('success', $token->getToken());
+        } else $mysql->bind_query($sql, $params);
+        $token->session($result[0]['uid'], $result[0]['username']);
+        $return->retMsg('success');
         break;
     case 'register':
         if (isEmpty($_POST['username']) || isEmpty($_POST['password']) || isEmpty($_POST['email']))

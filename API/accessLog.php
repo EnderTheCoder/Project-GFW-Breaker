@@ -24,9 +24,8 @@ $params = array(
     6 => $_POST['referer'],
     7 => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
 );
-if ($token->judgeToken()) {
-    $token_ = $token->getToken();
-    $params[3] = $token_['uid'];
+if ($token->sessionJudge()) {
+    $params[3] = $_SESSION['uid'];
 }
 $mysql->bind_query($sql, $params);
 $sql = 'SELECT * FROM main_ip_log WHERE ip_addr = ?';
