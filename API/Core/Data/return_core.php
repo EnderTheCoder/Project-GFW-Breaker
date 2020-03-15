@@ -83,6 +83,10 @@ class return_core
             'code' => 218,
             'msg' => '文件上传错误！',
         ),
+        'tokenFailed' => array(
+          'code' => 219,
+          'msg' => 'token已失效或不存在',
+        ),
         'dbgMsg' => array(
             'code' => 300,
             'msg' => '预留调试代码',
@@ -118,8 +122,9 @@ class return_core
 
     public function retMsg($type, $data = null, $msg = null)
     {
-        if (isEmpty($this->code[$type])) $ret = $this->code['dbgMsg'];
-        else $ret = $this->code[$type];
+//        if (isEmpty($this->code[$type])) $ret = $this->code['dbgMsg'];
+//        else $ret = $this->code[$type];
+        $ret = isEmpty($this->code[$type]) ? $this->code['dbgMsg'] : $this->code[$type];
         if ($data)
             $ret['data'] = $data;
         else $ret['data'] = array();

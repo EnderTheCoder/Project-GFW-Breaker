@@ -56,9 +56,9 @@ class mysql_core
         }
     }
 
-    public function fetchLine($key)
+    public function fetchLine($key, $line = 0)
     {
-        return $this->result[0][$key];
+        return $this->result[$line][$key];
     }
 
     //debug函数，判断是否发生错误
@@ -85,4 +85,5 @@ class mysql_core
     {
         $this->con = null;
     }
+
 }
