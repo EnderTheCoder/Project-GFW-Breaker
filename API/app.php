@@ -67,6 +67,12 @@ switch ($_POST['type']) {
         $params = array(1 => $mysql->fetchLine('parent'));
         $return->retMsg('success', $mysql->bind_query($sql, $params));
     }
+    case 'handshake':
+    {
+        if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');
+        $token->update($_POST['token']);
+        $return->retMsg('success');
+    }
     case 'logout':
     {
         if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');

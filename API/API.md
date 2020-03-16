@@ -80,4 +80,39 @@ id=f1991455223%40sina.com&password=123456&sign=0429D9841CB74167F6B259AE38524FEC&
 |type|必须为字符串'login'|
 |id|用户输入的邮箱或用户名,后端会自行判断类型|
 |password|用户输入的密码|
-## 
+## 2.退出登录
+|条目|注解|
+|---|---|
+|请求方式|POST|
+|返回值格式|application/json|
+|地址|http:///API/app.php|
+
+|参数|用法|
+|---|---|
+|type|必须为字符串'logout'|
+|token|登录时回传的token_value|
+## 3.握手
+|条目|注解|
+|---|---|
+|请求方式|POST|
+|返回值格式|application/json|
+|地址|http:///API/app.php|
+
+|参数|用法|
+|---|---|
+|type|必须为字符串'handshake'|
+|token|登录时回传的token_value|
+建议30秒一次，如果失败必须立即重试
+## 4.获取用户订阅线路列表
+|条目|注解|
+|---|---|
+|请求方式|POST|
+|返回值格式|application/json|
+|地址|http:///API/app.php|
+
+|参数|用法|
+|---|---|
+|type|必须为字符串'get-plan'|
+|token|登录时回传的token_value|
+
+data会返回用户的订阅列表，索引为0到n-1
