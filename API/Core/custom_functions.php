@@ -48,3 +48,9 @@ function adminStateCheck()
 {
     return !isEmpty($_SESSION['admin_session']) && $_SESSION['admin_session']['ip_addr'] == getIP();
 }
+
+function countX($array)
+{
+    if (!$array) return 0;
+    else return count($array);
+}

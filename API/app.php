@@ -45,7 +45,9 @@ switch ($_POST['type']) {
             $return->retMsg('passErr');
         }
         $mysql->bind_query($sql, $params);
-        $return->retMsg('success', $token->set($result[0]['uid'], $sign->getDevice(), getIP()));
+        $tokens = $token->set($result[0]['uid'], $sign->getDevice(), getIP());
+        if ($tokens) $return->retMsg('success', $tokens);
+        else $return->retMsg('tokenFailed');
         break;
     }
     case 'get-plan':
