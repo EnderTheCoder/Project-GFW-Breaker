@@ -84,8 +84,8 @@ class return_core
             'msg' => '文件上传错误！',
         ),
         'tokenFailed' => array(
-          'code' => 219,
-          'msg' => 'token已失效或不存在',
+            'code' => 219,
+            'msg' => 'token已失效或不存在',
         ),
         'dbgMsg' => array(
             'code' => 300,

@@ -77,7 +77,7 @@ switch ($_POST['type']) {
     {
         if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');
         $token->del($_POST['token']);
-        $return->setMsg('success');
+        $return->retMsg('success');
         break;
     }
 }
