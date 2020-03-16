@@ -139,11 +139,11 @@ class token_core
         $sql = 'SELECT username, multi_device FROM main_users WHERE uid = ?';
         $params = array(1 => $uid);
         if (!$mysql->bind_query($sql, $params)) return false;
-        $devices = count($this->getByUID($uid));
+        $devices = countX($this->getByUID($uid));
         if ($mysql->fetchLine('multi_device') > $devices) return false;
-        $sql = 'INSERT INTO main_token (username, timestamp, token_value, ip, device) VALUES (?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO main_token (uid, timestamp, token_value, ip, device) VALUES (?, ?, ?, ?, ?)';
         $params = array(
-            1 => $mysql->fetchLine('username'),
+            1 => $uid,
             2 => time(),
             3 => md5($uid . time() . $sql),
             4 => $ip,
