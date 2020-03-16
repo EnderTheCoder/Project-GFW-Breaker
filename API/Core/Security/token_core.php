@@ -89,7 +89,10 @@ class token_core
     {
         $mysql = new mysql_core();
         $sql = 'UPDATE main_token SET timestamp = ? WHERE token_value = ?';
-        $params = array(1 => $token_value);
+        $params = array(
+            1 => time(),
+            2 => $token_value
+        );
         $mysql->bind_query($sql, $params);
     }
 
