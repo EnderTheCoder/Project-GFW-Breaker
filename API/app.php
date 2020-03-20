@@ -87,7 +87,7 @@ switch ($_POST['type']) {
         $sql = 'SELECT version FROM main_apps WHERE app_id = ?';
         $params = array(1 => $_POST['app_id']);
         $mysql->bind_query($sql, $params);
-        $return->retMsg('success', $mysql->fetchLine('version'));
+        $return->retMsg('success', array('version' => $mysql->fetchLine('version')));
         break;
     }
 }

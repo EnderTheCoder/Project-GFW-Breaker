@@ -57,6 +57,11 @@ class mysql_core
         }
     }
 
+    public function fetch()
+    {
+        return $this->result;
+    }
+
     public function fetchLine($key, $line = 0)
     {
         return $this->result[$line][$key];
