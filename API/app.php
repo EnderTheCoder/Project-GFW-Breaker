@@ -21,7 +21,7 @@ $sign->initParams($_POST);
 if ($sign->checkSign() !== true) $return->retMsg($sign->checkSign());
 if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
 switch ($_POST['type']) {
-    case 'login':
+    case 'login'://登录接口
     {
         if (isEmpty($_POST['id']) || isEmpty($_POST['password'])) $return->retMsg('emptyParam');
         $sql = 'SELECT *  FROM main_users';
@@ -50,7 +50,7 @@ switch ($_POST['type']) {
         else $return->retMsg('tokenFailed');
         break;
     }
-    case 'get-plan':
+    case 'get-plan'://获取订阅线路列表
     {
         if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');
         $sql = 'SELECT plan_id FROM main_users WHERE uid = ?';
@@ -66,18 +66,28 @@ switch ($_POST['type']) {
         $sql = 'SELECT * FROM main_vmess WHERE vmess_group = ?';
         $params = array(1 => $mysql->fetchLine('parent'));
         $return->retMsg('success', $mysql->bind_query($sql, $params));
+        break;
     }
-    case 'handshake':
+    case 'handshake'://握手更新token
     {
         if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');
         $token->update($_POST['token']);
         $return->retMsg('success');
+        break;
     }
-    case 'logout':
+    case 'logout'://退出登录
     {
         if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');
         $token->del($_POST['token']);
         $return->retMsg('success');
+        break;
+    }
+    case 'version-check'://检查当前客户端是否为最新版本
+    {
+        $sql = 'SELECT version FROM main_apps WHERE app_id = ?';
+        $params = array(1 => $_POST['app_id']);
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success', $mysql->fetchLine('version'));
         break;
     }
 }

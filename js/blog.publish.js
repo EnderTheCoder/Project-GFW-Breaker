@@ -1,3 +1,37 @@
+$("#admin-content-area").append(`<form class="layui-form publish-blog layui-form-pane">
+        <h1>发布博客</h1>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="title">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="blog_title" lay-verify="required" placeholder="请输入博客标题" autocomplete="off"
+                       class="layui-input" id="title">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="summary">简述</label>
+            <div class="layui-input-block">
+                <textarea name="blog_summary" placeholder="请输入内容简述" class="layui-textarea" id="summary"
+                          autocomplete="off" lay-verify="required"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="content">内容</label>
+            <div class="layui-input-block">
+                <!--                <input type="file" name="blog_content" autocomplete="off" class="layui-btn"-->
+                <!--                       id="content" lay-verify="required">-->
+                <textarea type="file" name="blog_content" autocomplete="off" class="layui-textarea"
+                          placeholder="请输入markdown格式的文章内容" id="content" lay-verify="required" rows="20"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">可见性</label>
+            <div class="layui-input-block">
+                <input type="radio" name="blog_visibility" value="1" title="立即可见" checked>
+                <input type="radio" name="blog_visibility" value="0" title="仅管理员可见">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-fluid layui-bg-blue" lay-filter="publish_blog" lay-submit>提交</button>
+    </form>`);
 layui.use('form', function () {
     const form = layui.form;
     form.on('submit(publish_blog)', function (data) {

@@ -76,6 +76,7 @@ switch ($_POST['type']) {
             );
             $mysql->bind_query($sql, $params);
         }
+        $return->retMsg('success');
         break;
     }
     case 'get-vmess-group-all':
@@ -91,6 +92,30 @@ switch ($_POST['type']) {
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['id']) || isEmpty($_POST['data'])) $return->retMsg('emptyParam');
-
+        $sql = 'UPDATE main_vmess_group SET name = ?, speed_rank = ?, flow = ?, flow_limit = ?, price = ? WHERE id = ?';
+        $params = array(
+            1 => $_POST['data']['name'],
+            2 => $_POST['data']['speed_rank'],
+            3 => $_POST['data']['flow'],
+            4 => $_POST['data']['flow_limit'],
+            5 => $_POST['data']['price'],
+            6 => $_POST['id'],
+        );
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success', $result);
+        break;
     }
+    case 'get-plan':
+    {
+        if (!adminStateCheck()) $return->retMsg('passErr');
+        $sql = 'SELECT `name`, price, flow_limit, buy_cnt FROM main_plan';
+        if (!isEmpty($_POST['id'])) {
+            $sql .= ' WHERE id = ?';
+            $params = array(1 => $_POST['id']);
+            $result = $mysql->bind_query($sql, $params);
+            $return->retMsg('success', $result);
+        } else $return->retMsg('success', $mysql->bind_query($sql));
+        break;
+    }
+
 }
