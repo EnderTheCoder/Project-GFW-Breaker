@@ -4,6 +4,7 @@ class mysql_core
 {
     private $con, $isError = false, $ErrorMsg;
     private $result;
+
     //在实例化对象时连接数据库
     public function __construct()
     {
