@@ -40,8 +40,6 @@ switch ($_POST['type']) {
     case 'login-check':
     {
         $result = array('is_login' => false);
-        if (isEmpty($_SESSION['admin_session']) || $_SESSION['admin_session']['ip_addr'] != getIP() || $_SESSION['admin_session']['user_agent'] != $_SERVER['HTTP_USER_AGENT'])
-            $return->retMsg('success', $result);
         if (!adminStateCheck()) $return->retMsg('success', $result);
         $result['is_login'] = true;
         $return->retMsg('success', $result);
@@ -61,8 +59,8 @@ switch ($_POST['type']) {
         if (isEmpty($_POST['name']) || isEmpty($_POST['speed_rank']) ||
             isEmpty($_POST['flow_limit']) || isEmpty($_POST['price']) ||
             isEmpty($_POST['cnt']) || isEmpty(['rows'])) $return->retMsg('emptyParam');
-        $sql = 'INSERT INTO main_vmess_group (name, speed_rank, flow_limit, price) VALUES (?, ?, ?, ?)';
-        $params = array($_POST['name'], $_POST['speed_rank'], $_POST['flow_limit'], $_POST['price']);
+        $sql = 'INSERT INTO main_vmess_group (name, speed_rank, flow_limit) VALUES (?, ?, ?)';
+        $params = array(0, $_POST['name'], $_POST['speed_rank'], $_POST['flow_limit']);
         $mysql->bind_query($sql, $params);
         $return->retMsg('success');
         $group_id = $mysql->getId();
@@ -92,14 +90,13 @@ switch ($_POST['type']) {
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['id']) || isEmpty($_POST['data'])) $return->retMsg('emptyParam');
-        $sql = 'UPDATE main_vmess_group SET name = ?, speed_rank = ?, flow = ?, flow_limit = ?, price = ? WHERE id = ?';
+        $sql = 'UPDATE main_vmess_group SET name = ?, speed_rank = ?, flow = ?, flow_limit = ? WHERE id = ?';
         $params = array(
             1 => $_POST['data']['name'],
             2 => $_POST['data']['speed_rank'],
             3 => $_POST['data']['flow'],
             4 => $_POST['data']['flow_limit'],
-            5 => $_POST['data']['price'],
-            6 => $_POST['id'],
+            5 => $_POST['id'],
         );
         $mysql->bind_query($sql, $params);
         $return->retMsg('success', $result);
@@ -108,13 +105,24 @@ switch ($_POST['type']) {
     case 'get-plan':
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
-        $sql = 'SELECT `name`, price, flow_limit, buy_cnt FROM main_plan';
+        $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt FROM main_plan';
         if (!isEmpty($_POST['id'])) {
-            $sql .= ' WHERE id = ?';
+            $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt, son FROM main_plan WHERE id = ?';
             $params = array(1 => $_POST['id']);
             $result = $mysql->bind_query($sql, $params);
-            $return->retMsg('success', $result);
-        } else $return->retMsg('success', $mysql->bind_query($sql));
+            $result[0]['son'] = json_decode($result[0]['son'], true);
+            $sql = 'SELECT id, name, speed_rank, flow, flow_limit FROM main_vmess_group WHERE id = ?';
+            $result[0]['son']['row'] = countX($result[0]['son']);
+            for ($i = 0; $i < $result[0]['son']['row']; $i++) {
+                $params = array(1 => $result[0]['son'][$i]);
+                $row = $mysql->bind_query($sql, $params);
+                $result[0]['son'][$i] = $row[0];
+            }
+            $return->retMsg('success', $result[0]);
+        } else {
+            $mysql->bind_query($sql);
+            $return->retMsg('success', $mysql->fetch(true));
+        }
         break;
     }
 

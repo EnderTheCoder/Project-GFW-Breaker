@@ -57,8 +57,9 @@ class mysql_core
         }
     }
 
-    public function fetch()
+    public function fetch($enableRowNums = false)
     {
+        if ($enableRowNums) $this->result['row'] = countX($this->result);
         return $this->result;
     }
 

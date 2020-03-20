@@ -50,3 +50,19 @@ body {
     color: #cccccc;
     text-align: center;
 }
+
+#plan-info {
+    background-color: #6f42c1;
+    box-shadow: 10px 10px 5px #222222;
+    width: 300px;
+    margin-top: 10px;
+}
+
+#plan-info div{
+    color: #D0D0D0;
+    height: 80px;
+    width: 100%;
+    text-align: center;
+    line-height: 80px;
+    font-size: large;
+}
