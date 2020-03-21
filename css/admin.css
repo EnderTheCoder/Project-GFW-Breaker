@@ -66,3 +66,12 @@ body {
     line-height: 80px;
     font-size: large;
 }
+
+#add-plan-form {
+    width: 380px;
+    padding: 10px;
+}
+
+#edit-vmess-group-form {
+    padding: 10px;
+}

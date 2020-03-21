@@ -17,8 +17,20 @@ if (!action) {
 
 </tbody> 
 </table>
-<button type="button" class="layui-btn layui-btn-fluid">添加计划</button>
+<button type="button" class="layui-btn layui-btn-fluid" id="add-plan-btn">添加计划</button>
 `);
+
+    $("#add-plan-btn").click(function () {
+        layui.use('layer', function(){
+            let layer = layui.layer;
+            layer.open({
+                type: 2,
+                content: './iframe/add-plan.html',
+                anim: 1,
+                area: ['400px', '380px'],
+            });
+        });
+    });
     data.app_id = 3;
     data.type = 'get-plan';
     data.timestamp = getUnixTS();
@@ -90,15 +102,27 @@ if (action === 'show') {
 
                     </tbody> 
                 </table>
-                <button type="button" class="layui-btn layui-btn-fluid">添加vmess组</button>
+                <button type="button" class="layui-btn layui-btn-fluid" id="edit-vmess-group-btn">编辑vmess组</button>
             </div>
         </div>
     </div>
     `);
+    $("#edit-vmess-group-btn").click(function () {
+        layui.use('layer', function(){
+            let layer = layui.layer;
+            layer.open({
+                type: 2,
+                content: 'iframe/plan-edit-vmess-group.html?id=' + getQueryString('id'),
+                anim: 1,
+                area: ['400px', '380px'],
+            });
+        });
+    });
     data.app_id = 3;
     data.type = 'get-plan';
     data.id = getQueryString('id');
     data.timestamp = getUnixTS();
+
     data.sign = $.md5('app_id3id' + data.id + 'timestamp' + data.timestamp + 'type' + data.type + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
     $.ajax({
         url: 'API/admin.php',
@@ -111,12 +135,12 @@ if (action === 'show') {
             if (json['code'] === 100) {
                 let area = $("#plan-info");
                 area.append(`
-                <div>` + 'ID：' +json['data']['id'] + `</div>
-                <div>` + '名称：' +json['data']['name'] + `</div>
-                <div>` + '价格：￥' +json['data']['price'] + `/月` + `</div>
-                <div>` + '流量上限：' +json['data']['flow_limit'] + 'GB' + `</div>
-                <div>` + '累计售出：' +json['data']['buy_cnt'] + `</div>
-                <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger">删除</button>
+                <div>` + 'ID：' + json['data']['id'] + `</div>
+                <div>` + '名称：' + json['data']['name'] + `</div>
+                <div>` + '价格：￥' + json['data']['price'] + `/月` + `</div>
+                <div>` + '流量上限：' + json['data']['flow_limit'] + 'GB' + `</div>
+                <div>` + '累计售出：' + json['data']['buy_cnt'] + `</div>
+                <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" onclick="window.location.href='admin-plan.html?action=delete&id=` + json['data']['id'] + `'">删除</button>
                 `);
                 area = $("#vmess-group-table tbody");
                 for (let i = 0; i < json['data']['son']['row']; i++) {
@@ -127,7 +151,7 @@ if (action === 'show') {
                         <td>` + json['data']['son'][i]['speed_rank'] + `</td>
                         <td>` + json['data']['son'][i]['flow_limit'] + 'GB' + `</td>
                         <td>` + json['data']['son'][i]['flow'] + 'GB' + `</td>
-                        <td><a style="color: blue" href="admin-vmess-group.html?action=show&id=` + json['data'][i]['id'] + `">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: red"  href="` + json['data'][i]['id'] + `">删除</a></td>
+                        <td><a style="color: blue" href="admin-vmess-group.html?action=show&id=` + json['data']['son'][i]['id'] + `">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: red"  href=admin-plan.html?action=edit&id="` + json['data']['son'][i]['id'] + `">删除</a></td>
                     </tr>
                     `);
                 }
@@ -137,6 +161,36 @@ if (action === 'show') {
                         limit: 30
                     });
                 });
+            } else layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.alert('奇怪的错误增加了！')
+            });
+        },
+        error: function () {
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.alert('与服务器失去连接，请检查网络')
+            });
+        }
+    });
+}
+
+if (action === 'delete') {
+    data.app_id = 3;
+    data.type = 'delete-plan';
+    data.id = getQueryString('id');
+    data.timestamp = getUnixTS();
+    data.sign = $.md5('app_id3id' + data.id + 'timestamp' + data.timestamp + 'type' + data.type + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
+    $.ajax({
+        url: 'API/admin.php',
+        type: "POST",
+        dataType: 'json',
+        timeout: 5000,
+        data: data,
+        success: function (result) {
+            let json = eval(result);
+            if (json['code'] === 100) {
+                window.location.href = 'admin-plan.html';
             } else layui.use('layer', function () {
                 let layer = layui.layer;
                 layer.alert('奇怪的错误增加了！')

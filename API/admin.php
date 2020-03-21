@@ -35,7 +35,6 @@ switch ($_POST['type']) {
         $_SESSION['admin_session']['ip_addr'] = getIP();
         $_SESSION['admin_session']['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $return->retMsg('success');
-        break;
     }
     case 'login-check':
     {
@@ -43,7 +42,6 @@ switch ($_POST['type']) {
         if (!adminStateCheck()) $return->retMsg('success', $result);
         $result['is_login'] = true;
         $return->retMsg('success', $result);
-        break;
     }
     case 'access-log-checkout':
     {
@@ -51,7 +49,6 @@ switch ($_POST['type']) {
         $sql = 'SELECT * FROM main_access_log ORDER BY id DESC LIMIT 500';
         $result = $mysql->bind_query($sql);
         $return->retMsg('success', $result);
-        break;
     }
     case 'add-vmess-group':
     {
@@ -75,33 +72,47 @@ switch ($_POST['type']) {
             $mysql->bind_query($sql, $params);
         }
         $return->retMsg('success');
-        break;
     }
-    case 'get-vmess-group-all':
+    case 'get-vmess-group':
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
         $sql = 'SELECT * FROM main_vmess_group';
-        $result = $mysql->bind_query($sql);
-        $result['rows'] = count($result);
-        $return->retMsg('success', $result);
-        break;
+        if (isEmpty($_POST['id'])) {
+            $result = $mysql->bind_query($sql);
+            $result['row'] = countX($result);
+            $return->retMsg('success', $result);
+        } else {
+            $sql .= ' WHERE id = ?';
+            $params = array(1 => $_POST['id']);
+            $result = $mysql->bind_query($sql, $params);
+            $return->retMsg('success', $result[0]);
+        }
     }
+
     case 'edit-vmess-group':
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
-        if (isEmpty($_POST['id']) || isEmpty($_POST['data'])) $return->retMsg('emptyParam');
-        $sql = 'UPDATE main_vmess_group SET name = ?, speed_rank = ?, flow = ?, flow_limit = ? WHERE id = ?';
+        if (isEmpty($_POST['id']) || isEmpty($_POST['key']) || isEmpty($_POST['value'])) $return->retMsg('emptyParam');
+        $sql = 'UPDATE main_vmess_group SET ? = ? WHERE id = ?';
         $params = array(
-            1 => $_POST['data']['name'],
-            2 => $_POST['data']['speed_rank'],
-            3 => $_POST['data']['flow'],
-            4 => $_POST['data']['flow_limit'],
-            5 => $_POST['id'],
+            1 => $_POST['key'],
+            2 => $_POST['value'],
+            3 => $_POST['id'],
         );
         $mysql->bind_query($sql, $params);
-        $return->retMsg('success', $result);
-        break;
+        $return->retMsg('success');
     }
+
+    case 'delete-vmess-group':
+    {
+        if (!adminStateCheck()) $return->retMsg('passErr');
+        if (isEmpty($_POST['id'])) $return->retMsg('emptyParam');
+        $sql = 'DELETE FROM main_vmess_group WHERE id = ?';
+        $params = array(1 => $_POST['id']);
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success');
+    }
+
     case 'get-plan':
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
@@ -123,7 +134,44 @@ switch ($_POST['type']) {
             $mysql->bind_query($sql);
             $return->retMsg('success', $mysql->fetch(true));
         }
-        break;
     }
 
+    case 'add-plan':
+    {
+        if (!adminStateCheck()) $return->retMsg('passErr');
+        if (isEmpty($_POST['name']) || isEmpty($_POST['price']) || isEmpty($_POST['flow_limit']) || isEmpty($_POST['son'])) $return->retMsg('emptyParam');
+        $sql = 'INSERT INTO main_plan (name, price, flow_limit, son) VALUES (?, ?, ?, ?)';
+        $params = array(
+            1 => $_POST['name'],
+            2 => $_POST['price'],
+            3 => $_POST['flow_limit'],
+            4 => $_POST['son'],
+        );
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success');
+    }
+
+    case 'edit-plan':
+    {
+        if (!adminStateCheck()) $return->retMsg('passErr');
+        if (isEmpty($_POST['id']) || isEmpty($_POST['key']) || isEmpty($_POST['value'])) $return->retMsg('emptyParam');
+        $sql = 'UPDATE main_plan SET ? = ? WHERE id = ?';
+        $params = array(
+            1 => $_POST['key'],
+            2 => $_POST['value'],
+            3 => $_POST['id'],
+        );
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success');
+    }
+
+    case 'delete-plan':
+    {
+        if (!adminStateCheck()) $return->retMsg('passErr');
+        if (isEmpty($_POST['id'])) $return->retMsg('emptyParam');
+        $sql = 'DELETE FROM main_plan WHERE id = ?';
+        $params = array(1 => $_POST['id']);
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success');
+    }
 }

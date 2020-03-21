@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>GFW-BREAKER-ADMIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>GFW-Breaker 后台管理</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link type="text/css" rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="add-plan-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="name">名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="name" name="name" required lay-verify="required" placeholder="请输入名称"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="price">价格</label>
+        <div class="layui-input-block">
+            <input type="text" id="price" name="price" required lay-verify="required" placeholder="请输入价格（月付）"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="flow_limit">流量限制</label>
+        <div class="layui-input-block">
+            <input type="number" id="flow_limit" name="flow_limit" required lay-verify="required"
+                   placeholder="请输入每月最大流量(GB)" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">vmess组</label>
+        <div class="layui-input-block plan-checkbox-area" style="overflow-y: auto; height: 100px">
+        </div>
+    </div>
+    <button lay-submit class="layui-btn layui-btn-fluid" id="add-plan-btn" lay-filter="addPlan">添加</button>
+</form>
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery.md5.js"></script>
+<script src="../js/custom.functions.js"></script>
+<script>
+    let data = {};
+    data.app_id = 3;
+    data.type = 'get-vmess-group';
+    data.timestamp = getUnixTS();
+    data.sign = $.md5('app_id3timestamp' + data.timestamp + 'type' + data.type + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93');
+    data.sign = data.sign.toUpperCase();
+    $.ajax({
+        url: '../API/admin.php',
+        type: "POST",
+        dataType: 'json',
+        timeout: 5000,
+        data: data,
+        success: function (result) {
+            let json = eval(result);
+            if (json['code'] === 100) {
+                let area = $(".plan-checkbox-area");
+                for (let i = 0; i < json['data']['row']; i++) {
+                    area.append(`
+                    <input type="checkbox" name="son" title="` + json['data'][i]['name'] + `" value="` + json['data'][i]['id'] + `">
+                    `);
+                }
+            } else layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.alert('奇怪的错误增加了！')
+            });
+        },
+        error: function () {
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.alert('与服务器失去连接，请检查网络')
+            });
+        }
+    });
+    layui.use('form', function () {
+        let form = layui.form;
+        form.on('submit(addPlan)', function (data) {
+            let json = data.field;
+            let arr = [];
+            $("input:checkbox[name='son']:checked").each(function (i) {
+                arr[i] = $(this).val();
+            });
+            json.son = arrToObj(arr, true);
+            console.log(json.son);
+            json.app_id = 3;
+            json.type = 'add-plan';
+            json.timestamp = getUnixTS();
+            //name price flow_limit son app_id timestamp type
+            json.sign = $.md5(
+                'app_id' + json.app_id +
+                'flow_limit' + json.flow_limit +
+                'name' + json.name +
+                'price' + json.price +
+                'son' + json.son +
+                'timestamp' + json.timestamp +
+                'type' + json.type +
+                'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
+            $.ajax({
+                url: '../API/admin.php',
+                type: "POST",
+                dataType: 'json',
+                timeout: 5000,
+                data: json,
+                success: function (result) {
+                    let json = eval(result);
+                    if (json['code'] === 100) {
+                        window.top.location.href = '../admin-plan.html';
+                    } else layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('奇怪的错误增加了！')
+                    });
+                },
+                error: function () {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('与服务器失去连接，请检查网络')
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
