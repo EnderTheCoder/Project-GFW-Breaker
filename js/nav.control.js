@@ -1,4 +1,4 @@
-const area = $("#nav-list");
+let area = $("#nav-list");
 if (getQueryString('action') === 'quit')
     $.ajax({url: 'API/loginDisable.php', type: 'GET', async: false});
 $.ajax({

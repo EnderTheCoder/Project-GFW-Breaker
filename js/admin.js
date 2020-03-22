@@ -19,9 +19,15 @@ $.ajax({
                 window.location.href = 'admin-login.html';
             }
             // else showFramework();
-        } else layer.msg('奇怪的错误增加了！')
+        } else layui.use('layer', function(){
+            let layer = layui.layer;
+            layer.alert('奇怪的错误增加了！')
+        });
     },
     error: function () {
-        layer.msg('与服务器失去连接，请检查网络')
+        layui.use('layer', function(){
+            let layer = layui.layer;
+            layer.alert('与服务器失去连接，请检查网络')
+        });
     }
 });

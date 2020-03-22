@@ -199,3 +199,26 @@ body {
     color: #00CC00;
 }
 
+.shop-plan-block {
+    color: #e2e2e2;
+    width: 300px;
+    box-shadow: 10px 10px 5px #222222;
+    margin: 20px;
+}
+
+.shop-plan-block h2 {
+    background-color: #393D49;
+    text-align: center;
+    font-size: 40px;
+}
+
+.shop-plan-block div {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    font-size: large;
+}
+
+.shop-plan-block span {
+
+}

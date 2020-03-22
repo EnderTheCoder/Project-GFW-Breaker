@@ -3,7 +3,7 @@
 class mysql_core
 {
     private $con, $isError = false, $ErrorMsg;
-    private $result;
+    private $result, $row;
 
     //在实例化对象时连接数据库
     public function __construct()
@@ -49,6 +49,7 @@ class mysql_core
                     $stmt->bindValue($i, $params[$i], PDO::PARAM_STR);
             $stmt->execute();
             $this->result = $stmt->fetchAll();
+            $this->row = countX($this->result);
             return $this->result;
         } catch (PDOException $exception) {
             $this->isError = true;
@@ -57,14 +58,20 @@ class mysql_core
         }
     }
 
-    public function fetch()
+    public function fetch($enableRowNums = false)
     {
+        if ($enableRowNums) $this->result['row'] = countX($this->result);
         return $this->result;
     }
 
     public function fetchLine($key, $line = 0)
     {
         return $this->result[$line][$key];
+    }
+
+    public function getRowNum()
+    {
+        return $this->row;
     }
 
     //debug函数，判断是否发生错误
