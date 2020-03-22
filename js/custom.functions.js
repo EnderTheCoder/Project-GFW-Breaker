@@ -64,3 +64,25 @@ function arrToObj(arr, isString) {
     return isString ? JSON.stringify(result) : result;
 }
 
+function randomNum(minNum, maxNum) {
+    switch (arguments.length) {
+        case 1:
+            return parseInt(Math.random() * minNum + 1, 10);
+        case 2:
+            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+        default:
+            return 0;
+    }
+}
+
+function randomColorClass() {
+    let color = [];
+    color[0] = 'layui-bg-red';
+    color[1] = 'layui-bg-orange';
+    color[2] = 'layui-bg-green';
+    color[3] = 'layui-bg-blue';
+    color[4] = 'layui-bg-black';
+    color[5] = 'layui-bg-cyan';
+    return color[randomNum(0, 5)];
+}
+

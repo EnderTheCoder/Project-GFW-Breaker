@@ -151,7 +151,7 @@ if (action === 'show') {
                         <td>` + json['data']['son'][i]['speed_rank'] + `</td>
                         <td>` + json['data']['son'][i]['flow_limit'] + 'GB' + `</td>
                         <td>` + json['data']['son'][i]['flow'] + 'GB' + `</td>
-                        <td><a style="color: blue" href="admin-vmess-group.html?action=show&id=` + json['data']['son'][i]['id'] + `">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: red"  href=admin-plan.html?action=edit&id="` + json['data']['son'][i]['id'] + `">删除</a></td>
+                        <td><a style="color: blue" href="admin-vm1a1ess-group.html?action=show&id=` + json['data']['son'][i]['id'] + `">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: red"  href=admin-plan.html?action=edit&id="` + json['data']['son'][i]['id'] + `">删除</a></td>
                     </tr>
                     `);
                 }

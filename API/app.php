@@ -63,10 +63,22 @@ switch ($_POST['type']) {
         $mysql->bind_query($sql, $params);
         if ($mysql->fetchLine('lim_time') < time()) $return->retMsg('noResult', '套餐已过期');
         if ($mysql->fetchLine('lim_flow') < $mysql->fetchLine('flow')) $return->retMsg('noResult', '套餐流量不足');
-        $sql = 'SELECT * FROM main_vmess WHERE vmess_group = ?';
+        $sql = 'SELECT `name`, son FROM main_plan WHERE id = ?';
         $params = array(1 => $mysql->fetchLine('parent'));
-        $return->retMsg('success', $mysql->bind_query($sql, $params));
-        break;
+        $mysql->bind_query($sql, $params);
+        $son = json_decode($mysql->fetchLine('son'), true);
+        $cnt = 0;
+        $result = array();
+        for ($i = 0; $i < countX($son); $i++) {
+            $sql = 'SELECT id, area, config FROM main_vmess WHERE vmess_group = ?';
+            $params = array(1 => $son[$i]);
+            $vmess_group = $mysql->bind_query($sql, $params);
+            for ($j = 0; $j < $mysql->getRowNum(); $j++) {
+                $result[$cnt] = $vmess_group[$j];
+                $cnt++;
+            }
+        }
+        $return->retMsg('success', $result);
     }
     case 'handshake'://握手更新token
     {
