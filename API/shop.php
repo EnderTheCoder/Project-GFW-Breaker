@@ -73,7 +73,7 @@ switch ($_POST['type']) {
             5 => $costs,
             6 => $plan['info'],
             7 => $plan['id'],
-            8 => $plan['flow_limit'],
+            8 => $plan['flow_limit'] * $_POST['month'],
         );
         $mysql->bind_query($sql, $params);
         $return->retMsg('success', array('is_successful' => true));
