@@ -21,22 +21,43 @@ if (!$token->sessionJudge()) $return->setMsg('tokenFailed');
 if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
 switch ($_POST['type']) {
     case 'plan-all':
-        $sql = 'SELECT name, lim_time, multi_device, flow, line, speed_rank, auto_renewal, charge FROM main_user_plan WHERE uid = ?';
+    {
+        $sql = 'SELECT id, name, lim_time, flow, lim_flow, speed_rank, charge, info FROM main_user_plan WHERE uid = ?';
         $params = array(1 => $_SESSION['uid']);
         $result = $mysql->bind_query($sql, $params);
-        $result['row'] = count($result);
+        $result['row'] = countX($result);
+        $sql = 'SELECT plan_id FROM main_users WHERE uid = ?';
+        $mysql->bind_query($sql, $_SESSION['uid']);
+        $result['chosen'] = $mysql->fetchLine('plan_id');
         $return->retMsg('success', $result);
-        break;
+    }
+
     case 'billing-all':
+    {
         $sql = 'SELECT type, money, timestamp, id FROM main_user_billing WHERE uid = ?';
         $params = array(1 => $_SESSION['uid']);
         $result = $mysql->bind_query($sql, $params);
         $result['row'] = count($result);
         $return->retMsg('success', $result);
-        break;
+    }
+
     case 'billing-top':
+    {
         $sql = 'SELECT money, money_in, money_out FROM main_users WHERE uid = ?';
         $params = array(1 => $_SESSION['uid']);
         $return->retMsg('success', $mysql->bind_query($sql, $params));
-        break;
+    }
+
+    case 'chose-plan':
+    {
+        if (isEmpty($_POST['id'])) $return->retMsg('emptyParam');
+        $sql = 'UPDATE main_users SET plan_id = ? WHERE uid = ?';
+        $params = array(
+            1 => $_POST['id'],
+            2 => $_SESSION['uid'],
+        );
+        $mysql->bind_query($sql, $params);
+        $return->retMsg('success');
+    }
+
 }

@@ -41,6 +41,7 @@ class mysql_core
     //使用绑定参数执行带有输入的sql语句,$sql是sql语句,$params是参数数组
     public function bind_query($sql, $params = null)
     {
+        if ($params != null && !is_array($params)) $params = array(1 => $params);
         try {
             $conn = $this->connect();
             $stmt = $conn->prepare($sql);
@@ -66,6 +67,7 @@ class mysql_core
 
     public function fetchLine($key, $line = 0)
     {
+        if ($key === null) return $this->result[$line];
         return $this->result[$line][$key];
     }
 

@@ -51,7 +51,6 @@ body {
 
 
 .blog-block {
-    background-color: #6f42c1;
     width: 300px;
     padding: 10px;
     box-shadow: 10px 10px 5px #222222;
@@ -100,7 +99,6 @@ body {
 .plan-block {
     background-color: #6f42c1;
     width: 280px;
-    height: 400px;
     box-shadow: 15px 15px 15px 15px #222222;
     margin-left: auto;
     margin-right: auto;
@@ -221,4 +219,8 @@ body {
 
 .shop-plan-block span {
 
+}
+
+#shop-buy-form {
+    padding: 10px;
 }

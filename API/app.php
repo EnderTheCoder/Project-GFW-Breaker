@@ -30,7 +30,7 @@ switch ($_POST['type']) {
         $params = array(1 => $_POST['id']);
         $result = $mysql->bind_query($sql, $params);
         if ($mysql->fetchLine('state') != null) $return->retMsg('stateUnavailable', $mysql->fetchLine('state'));
-        $sql = 'INSERT INTO main_login_log (ip_addr, uid, timestamp, is_successful, device) VALUES (?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO main_login_log (ip_addr, uid, `timestamp`, is_successful, device) VALUES (?, ?, ?, ?, ?)';
         $params = array(
             1 => getIP(),
             2 => $result[0]['uid'],

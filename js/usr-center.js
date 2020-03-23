@@ -43,30 +43,58 @@ switch (action) {
                             '                <div>到期时间:' +
                             getDate(json['data'][i]['lim_time'], 'yyyy-MM-dd') +
                             '</div>' +
-                            '                <div>允许多设备在线:' +
-                            booleanToWord(json['data'][i]['multi_device']) +
-                            '</div>' +
                             '                <div>流量剩余:' +
-                            json['data'][i]['flow'] +
+                            (json['data'][i]['flow']) + `/` + (json['data'][i]['lim_flow']) +
                             'GB</div>' +
-                            '                <div>线路数量:' +
-                            json['data'][i]['line'] +
-                            '</div>' +
-                            '                <div>线路评级:' +
-                            json['data'][i]['speed_rank'] +
-                            '</div>' +
-                            '                <div>自动续费:' +
-                            booleanToWord(json['data'][i]['auto_renewal']) +
-                            '</div>' +
                             '                <div>已付款:' +
                             json['data'][i]['charge'] +
                             'CNY</div>' +
-                            '                <button type="button" class="layui-btn layui-btn-fluid layui-btn-normal" id="plan-btn' +
+                            '<div>信息:' +
+                            json['data'][i]['info'] +
+                            '</div>' +
+                            '                <button type="button" class="layui-btn layui-btn-fluid ' + (json['data']['chosen'] === json['data'][i]['id'] ? 'layui-btn-danger' : 'layui-btn-normal') + '" id="plan-btn-' +
                             json['data'][i]['id'] +
-                            '">详细信息</button>\n' +
-                            '            </div>\n' +
+                            '">' +
+                            (json['data']['chosen'] === json['data'][i]['id'] ? '已选中' : '选择') + '</button>' +
+                            '            </div>' +
                             '        </div>'
                         );
+                        if (json['data']['chosen'] !== json['data'][i]['id'])
+                            $("#plan-btn-" + json['data'][i]['id']).click(function () {
+                                let data = {};
+                                data.app_id = 1;
+                                data.type = 'chose-plan';
+                                data.timestamp = getUnixTS();
+                                data.id = json['data'][i]['id'];
+                                data.sign = $.md5(
+                                    'app_id' + data.app_id +
+                                    'id' + data.id +
+                                    'timestamp' + data.timestamp +
+                                    'type' + data.type +
+                                    '6ab43fb5a4d624f9fa000bc83ccef011').toUpperCase();
+                                $.ajax({
+                                    url: './API/usrCenter.php',
+                                    type: "POST",
+                                    dataType: 'json',
+                                    timeout: 5000,
+                                    data: data,
+                                    success: function (result) {
+                                        let json = eval(result);
+                                        if (json['code'] === 100) {
+                                            window.location.reload();
+                                        } else layui.use('layer', function () {
+                                            let layer = layui.layer;
+                                            layer.alert('奇怪的错误增加了！')
+                                        })
+                                    },
+                                    error: function () {
+                                        layui.use('layer', function () {
+                                            let layer = layui.layer;
+                                            layer.alert('与服务器失去连接，请检查网络')
+                                        });
+                                    }
+                                });
+                            });
                     }
                 }
             },
@@ -79,16 +107,16 @@ switch (action) {
         body.append('<div class="layui-container">\n' +
             '    <div class="layui-row cash-top">\n' +
             '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>账户余额：</span><span id="billing-a"></span><span>&nbsp;CNY</span>\n' +
+            '            <span>余额：</span><span id="billing-a"></span><span>&nbsp;CNY</span>\n' +
             '        </div>\n' +
             '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>本月总账：</span><span id="billing-b"></span><span>&nbsp;CNY</span>\n' +
+            '            <span>总账：</span><span id="billing-b"></span><span>&nbsp;CNY</span>\n' +
             '        </div>\n' +
             '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>本月支出：</span><span id="billing-c"></span><span>&nbsp;CNY</span>\n' +
+            '            <span>支出：</span><span id="billing-c"></span><span>&nbsp;CNY</span>\n' +
             '        </div>\n' +
             '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>本月收入：</span><span id="billing-d"></span><span>&nbsp;CNY</span>\n' +
+            '            <span>收入：</span><span id="billing-d"></span><span>&nbsp;CNY</span>\n' +
             '        </div>\n' +
             '    </div>\n' +
             '    <div class="layui-row billing-area">\n' +

@@ -105,7 +105,7 @@ class token_core
 
     public function sessionJudge()
     {
-        return $_SESSION['uid'] && $_SESSION['username'] && ($_SESSION['timestamp'] + MAX_TOKEN_LIVE > time());
+        return $_SESSION['uid'] && $_SESSION['username'] && ($_SESSION['timestamp'] + MAX_SESSION_LIVE > time());
     }
 
     public function sessionUpdate()

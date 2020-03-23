@@ -18,5 +18,6 @@ define("SMTP_USERNAME", "f1991455223@sina.com");//邮箱用户名
 define('PASSWORD_SALT', '8f76ebaf6bf52191727147ebf46dbf3a');//密码的盐
 define('MAX_SIGN_LIVE', 10);//签名生存时间,单位是秒
 define('MAX_TOKEN_LIVE', 60);//token生存时间,单位是秒
+define('MAX_SESSION_LIVE', 86400);//网站session最大生存时间
 define('TOKEN_SALT', 'B9FA9854EC4D8D04E823217A2A4F8F52');//token的盐
 define('ADMIN_SALT', 'IWANTTOMAKEBIGMONEY!!!');

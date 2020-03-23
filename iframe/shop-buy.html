@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>GFW-BREAKER-ADMIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>GFW-Breaker 购买iframe</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<form class="layui-form layui-form-pane" id="shop-buy-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="month">购买月数</label>
+        <div class="layui-input-block">
+            <input type="number" id="month" name="month" required lay-verify="required"
+                   placeholder="请输入一个1-12之间的整数" autocomplete="off" class="layui-input">
+        </div>
+        <small style="color: #6f42c1">季付9折,半年付8折,年付7折,多买多送</small>
+    </div>
+    <button lay-submit class="layui-btn layui-btn-fluid" id="buy-plan-btn" lay-filter="buyPlan">添加</button>
+</form>
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery.md5.js"></script>
+<script src="../js/custom.functions.js"></script>
+<script>
+    layui.use('form', function () {
+        let form = layui.form;
+        form.on('submit(buyPlan)', function (data) {
+            let json = data.field;
+            json.app_id = 3;
+            json.type = 'buy';
+            json.timestamp = getUnixTS();
+            json.id = getQueryString('id');
+            //id month
+            json.sign = $.md5(
+                'app_id' + json.app_id +
+                'id' + json.id +
+                'month' + json.month +
+                'timestamp' + json.timestamp +
+                'type' + json.type +
+                'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
+            $.ajax({
+                url: '../API/shop.php',
+                type: "POST",
+                dataType: 'json',
+                timeout: 5000,
+                data: json,
+                success: function (result) {
+                    let json = eval(result);
+                    if (json['code'] === 100) {
+                        if (!json['data']['is_successful']) {
+                            layui.use('layer', function () {
+                                let layer = layui.layer;
+                                layer.alert(json['data']['msg']);
+                            });
+                        } else window.top.location.href = '../usr-center.html?action=plan';
+                    } else layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('奇怪的错误增加了！')
+                    })
+                },
+                error: function () {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('与服务器失去连接，请检查网络')
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

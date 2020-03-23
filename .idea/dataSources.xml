@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/GFW-Breaker</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="GFW-Breaker@breakerg.com" uuid="8dde2020-c45d-410d-ad73-5f247b185a93">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://breakerg.com:3306/GFW-Breaker</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -62,7 +62,7 @@ if (id) {
                             '<div class="layui-col-xs12 layui-col-sm4 layui-col-md3 blog-frame" id="' +
                             'row-' + json['data'][i]['id'] +
                             '">\n' +
-                            '            <div class="blog-block">\n' +
+                            '            <div class="blog-block ' + randomColorClass() +  '">\n' +
                             '                <h1>\n' +
                             json['data'][i]['title'] +
                             '                </h1>\n' +
