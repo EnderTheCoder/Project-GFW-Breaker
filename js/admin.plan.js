@@ -27,7 +27,7 @@ if (!action) {
                 type: 2,
                 content: './iframe/add-plan.html',
                 anim: 1,
-                area: ['400px', '380px'],
+                area: ['400px', '430px'],
             });
         });
     });
@@ -140,6 +140,7 @@ if (action === 'show') {
                 <div>` + '价格：￥' + json['data']['price'] + `/月` + `</div>
                 <div>` + '流量上限：' + json['data']['flow_limit'] + 'GB' + `</div>
                 <div>` + '累计售出：' + json['data']['buy_cnt'] + `</div>
+                <div>` + '信息：' + json['data']['info'] + `</div>
                 <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" onclick="window.location.href='admin-plan.html?action=delete&id=` + json['data']['id'] + `'">删除</button>
                 `);
                 area = $("#vmess-group-table tbody");

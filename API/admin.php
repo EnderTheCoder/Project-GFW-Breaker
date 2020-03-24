@@ -118,7 +118,7 @@ switch ($_POST['type']) {
         if (!adminStateCheck()) $return->retMsg('passErr');
         $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt FROM main_plan';
         if (!isEmpty($_POST['id'])) {
-            $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt, son FROM main_plan WHERE id = ?';
+            $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt, son, info FROM main_plan WHERE id = ?';
             $params = array(1 => $_POST['id']);
             $result = $mysql->bind_query($sql, $params);
             $result[0]['son'] = json_decode($result[0]['son'], true);
@@ -139,13 +139,14 @@ switch ($_POST['type']) {
     case 'add-plan':
     {
         if (!adminStateCheck()) $return->retMsg('passErr');
-        if (isEmpty($_POST['name']) || isEmpty($_POST['price']) || isEmpty($_POST['flow_limit']) || isEmpty($_POST['son'])) $return->retMsg('emptyParam');
-        $sql = 'INSERT INTO main_plan (name, price, flow_limit, son) VALUES (?, ?, ?, ?)';
+        if (isEmpty($_POST['name']) || isEmpty($_POST['price']) || isEmpty($_POST['flow_limit']) || isEmpty($_POST['son']) || isEmpty($_POST['info'])) $return->retMsg('emptyParam');
+        $sql = 'INSERT INTO main_plan (name, price, flow_limit, son, info) VALUES (?, ?, ?, ?, ?)';
         $params = array(
             1 => $_POST['name'],
             2 => $_POST['price'],
             3 => $_POST['flow_limit'],
             4 => $_POST['son'],
+            5 => $_POST['info']
         );
         $mysql->bind_query($sql, $params);
         $return->retMsg('success');
@@ -173,5 +174,23 @@ switch ($_POST['type']) {
         $params = array(1 => $_POST['id']);
         $mysql->bind_query($sql, $params);
         $return->retMsg('success');
+    }
+
+    case 'get-access-log':
+    {
+        if (isEmpty($_POST['id'])) {
+            $sql = 'SELECT id, ip_addr, is_login, timestamp, access_url FROM main_access_log ORDER BY id DESC LIMIT 100';
+            $mysql->bind_query($sql);
+            $return->retMsg('success', $mysql->fetch(true));
+        } else {
+            $sql = 'SELECT * FROM main_access_log WHERE id = ?';
+            $mysql->bind_query($sql, $_POST['id']);
+            $return->retMsg('success', $mysql->fetchLine(null));
+        }
+    }
+
+    default:
+    {
+        $return->retMsg('dbgMsg');
     }
 }

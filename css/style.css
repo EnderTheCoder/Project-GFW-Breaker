@@ -51,7 +51,7 @@ body {
 
 
 .blog-block {
-    width: 300px;
+    width: 250px;
     padding: 10px;
     box-shadow: 10px 10px 5px #222222;
 }
@@ -131,6 +131,7 @@ body {
     box-shadow: 15px 15px 15px 15px #222222;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 30px;
     text-align: center;
     color: #eeeeee;
 }
@@ -205,9 +206,8 @@ body {
 }
 
 .shop-plan-block h2 {
-    background-color: #393D49;
     text-align: center;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .shop-plan-block div {

@@ -20,7 +20,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label" for="price">价格</label>
         <div class="layui-input-block">
-            <input type="text" id="price" name="price" required lay-verify="required" placeholder="请输入价格（月付）"
+            <input type="number" id="price" name="price" required lay-verify="required" placeholder="请输入价格（月付）"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -34,6 +34,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">vmess组</label>
         <div class="layui-input-block plan-checkbox-area" style="overflow-y: auto; height: 100px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="info">介绍</label>
+        <div class="layui-input-block">
+            <input type="text" id="info" name="info" required lay-verify="required" placeholder="请输入计划介绍"
+                   autocomplete="off" class="layui-input">
         </div>
     </div>
     <button lay-submit class="layui-btn layui-btn-fluid" id="add-plan-btn" lay-filter="addPlan">添加</button>
@@ -88,10 +95,11 @@
             json.app_id = 3;
             json.type = 'add-plan';
             json.timestamp = getUnixTS();
-            //name price flow_limit son app_id timestamp type
+            //name price flow_limit son app_id timestamp type info
             json.sign = $.md5(
                 'app_id' + json.app_id +
                 'flow_limit' + json.flow_limit +
+                'info' + json.info +
                 'name' + json.name +
                 'price' + json.price +
                 'son' + json.son +

@@ -70,11 +70,15 @@ switch ($_POST['type']) {
         $cnt = 0;
         $result = array();
         for ($i = 0; $i < countX($son); $i++) {
+            $sql = 'SELECT `name` FROM main_vmess_group WHERE id = ?';
+            $mysql->bind_query($sql, $son[$i]);
+            $name = $mysql->fetchLine('name');
             $sql = 'SELECT id, area, config FROM main_vmess WHERE vmess_group = ?';
-            $params = array(1 => $son[$i]);
-            $vmess_group = $mysql->bind_query($sql, $params);
+            $vmess_group = $mysql->bind_query($sql, $son[$i]);
             for ($j = 0; $j < $mysql->getRowNum(); $j++) {
                 $result[$cnt] = $vmess_group[$j];
+                $result[$cnt]['parent'] = $name;
+                $result[$cnt][3] = $name;
                 $cnt++;
             }
         }
