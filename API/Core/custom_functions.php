@@ -54,3 +54,11 @@ function countX($array)
     if (!$array) return 0;
     else return count($array);
 }
+
+function getSetting($key)
+{
+    $mysql = new mysql_core();
+    $sql = 'SELECT `value` FROM main_site_settings WHERE `key` = ?';
+    $mysql->bind_query($sql, $key);
+    return $mysql->fetchLine('value');
+}

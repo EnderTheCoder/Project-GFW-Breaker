@@ -67,16 +67,6 @@ class token_core
         $mysql->bind_query($sql, $params);
     }
 
-    public function getByValue($token_value)//只有app使用
-    {
-        $mysql = new mysql_core();
-        $sql = 'SELECT * FROM main_token WHERE token_value = ?';
-        $result = $mysql->bind_query($sql, array(1 => $token_value));
-        $this->token = $result[0];
-        $this->purge();
-        return $this->token;
-    }
-
     public function del($token_value)
     {
         $mysql = new mysql_core();
@@ -118,6 +108,16 @@ class token_core
         $_SESSION = null;
     }
 
+    public function getByValue($token_value)//只有app使用
+    {
+        $mysql = new mysql_core();
+        $sql = 'SELECT * FROM main_token WHERE token_value = ?';
+        $result = $mysql->bind_query($sql, array(1 => $token_value));
+        $this->token = $result[0];
+        $this->purge();
+        return $this->token;
+    }
+
     public function getByUID($uid)//只有app使用
     {
         $mysql = new mysql_core();
@@ -126,6 +126,12 @@ class token_core
         $this->token = $result[0];
         $this->purge();
         return $this->token;
+    }
+
+    public function fetchKey($token, $key)
+    {
+        $tokens = $this->getByValue($token);
+        return $tokens[$key];
     }
 
     public function judge($value)//只有app使用

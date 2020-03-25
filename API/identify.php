@@ -72,7 +72,7 @@ switch ($_POST['type']) {
         }
         $_COOKIE = null;
         if ($result[0][$_POST['key']]) $return->retMsg('dupVal');
-        $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time) VALUES (?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time, money) VALUES (?, ?, ?, ?, ?, ?, ?)';
         $params = array(
             1 => $_POST['username'],
             2 => md5($_POST['password'] . PASSWORD_SALT),
@@ -80,7 +80,8 @@ switch ($_POST['type']) {
             4 => $_POST['email'],
 //          5 => '您的邮箱尚未验证,请前往邮箱查收验证链接',
             5 => null,
-            6 => time()
+            6 => time(),
+            7 => getSetting('default_money'),
         );
         $mysql->bind_query($sql, $params);
         $email_token = md5($_POST['username'] . rand() . time());
@@ -100,7 +101,6 @@ switch ($_POST['type']) {
             'content' => '<a href="' . URL . '">[GFW-BREAKER]</a>尊敬的新用户' . $_POST['username'] . '您好,感谢您在本站的注册,请打开下方链接完成邮箱验证.<br><a href="' . $url . '">' . $url . '</a>',
         );
         $redis->queue_insert('email', $email_task);
-        if ($mysql->isError()) $return->retMsg('dbErr', $mysql->getError());
 //        if ($_POST['do_login']) $token->setToken($mysql->getId(), $_POST['username']);
         $return->retMsg('success');
         break;

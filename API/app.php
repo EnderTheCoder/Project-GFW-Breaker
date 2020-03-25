@@ -106,4 +106,30 @@ switch ($_POST['type']) {
         $return->retMsg('success', array('version' => $mysql->fetchLine('version')));
         break;
     }
+
+    case 'flow-update'://轮询更新流量信息
+    {
+        if (!$token->judge($_POST['token'])) $return->retMsg('tokenFailed');
+        if (isEmpty($_POST['flow']) || isEmpty($_POST['vmess_id'])) $return->retMsg('emptyParam');
+        $flow = round($_POST['flow'] / 1073741824, 2);
+        $uid = $token->fetchKey($_POST['token'], 'uid');
+        $sql = 'SELECT plan_id FROM main_users WHERE uid = ?';
+        $mysql->bind_query($sql, $uid);
+        $user_plan_id = $mysql->fetchLine('plan_id');
+        $sql = 'SELECT flow, lim_flow FROM main_user_plan WHERE id = ?';
+        $mysql->bind_query($sql, $user_plan_id);
+        if ($mysql->fetchLine('flow') + $flow >= $mysql->fetchLine('lim_flow')) $new_flow = $mysql->fetchLine('lim_flow');
+        else $new_flow = $mysql->fetchLine('flow') + $flow;
+        $mysql->update('main_user_plan', 'flow', $new_flow, 'id', $user_plan_id);
+        $mysql->change('main_vmess', 'flow', '+', $_POST['flow'], 'id', $_POST['vmess_id']);
+        $sql = 'SELECT vmess_group FROM main_vmess WHERE id = ?';
+        $mysql->bind_query($sql, $_POST['vmess_id']);
+        $mysql->change('main_vmess_group', 'flow', '+', $_POST['flow'], $new_flow, 'id', $mysql->fetchLine('vmess_group'));
+        $return->retMsg('success');
+    }
+
+    default:
+    {
+        $return->retMsg('dbgMsg');
+    }
 }

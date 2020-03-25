@@ -2,8 +2,10 @@
 
 class mysql_core
 {
-    private $con, $isError = false, $ErrorMsg;
-    private $result, $row;
+    private $con;
+    private $isError = false, $ErrorMsg;
+    private $result;
+    private $row;
 
     //在实例化对象时连接数据库
     public function __construct()
@@ -39,7 +41,7 @@ class mysql_core
     }
 
     //使用绑定参数执行带有输入的sql语句,$sql是sql语句,$params是参数数组
-    public function bind_query($sql, $params = null)
+    public function bind_query($sql, $params = null, $debug = false)
     {
         if ($params != null && !is_array($params)) $params = array(1 => $params);
         try {
@@ -53,10 +55,36 @@ class mysql_core
             $this->row = countX($this->result);
             return $this->result;
         } catch (PDOException $exception) {
-            $this->isError = true;
-            $this->ErrorMsg = '数据库查询错误,错误代码：' . $exception->getCode() . '错误信息：' . $exception->getMessage();
-            return $this->ErrorMsg;
+            if ($debug) {
+                $this->isError = true;
+                $this->ErrorMsg = '数据库查询错误,错误代码：' . $exception->getCode() . '错误信息：' . $exception->getMessage();
+                return $this->ErrorMsg;
+            } else {
+                $return = new return_core();
+                $return->retMsg('dbErr', '数据库查询错误,错误代码：' . $exception->getCode() . '错误信息：' . $exception->getMessage());
+                return false;
+            }
         }
+    }
+
+    function update($table, $key, $value, $c_key, $c_value, $c_function = '=')
+    {
+        $sql = 'UPDATE `' . $table . '` SET `' . $key . '` = ? WHERE `' . $c_key . '` ' . $c_function . ' ?';
+        $params = array(
+            1 => $value,
+            2 => $c_value
+        );
+        $this->bind_query($sql, $params);
+    }
+
+    function change($table, $key, $function, $value, $c_key, $c_value, $c_function = '=')
+    {
+        $sql = 'UPDATE `' . $table . '` SET `' . $key . '` = ? ' . $function . ' `' . $key . '` WHERE `' . $c_key . '` ' . $c_function . ' ?';
+        $params = array(
+            1 => $value,
+            2 => $c_value
+        );
+        $this->bind_query($sql, $params);
     }
 
     public function fetch($enableRowNums = false)
