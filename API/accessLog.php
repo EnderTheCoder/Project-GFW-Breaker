@@ -18,15 +18,14 @@ $sql = 'INSERT INTO main_access_log (ip_addr, user_agent, is_login, timestamp, a
 $params = array(
     1 => getIP(),
     2 => $_SERVER['HTTP_USER_AGENT'],
-    3 => null,
+    3 => 0,
     4 => time(),
     5 => $_SERVER['HTTP_REFERER'],
     6 => $_POST['referer'],
     7 => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
 );
-if ($token->sessionJudge()) {
-    $params[3] = $_SESSION['uid'];
-}
+if ($token->sessionJudge()) $params[3] = $_SESSION['uid'];
+if (adminStateCheck()) $params[3] = 1;
 $mysql->bind_query($sql, $params);
 $sql = 'SELECT * FROM main_ip_log WHERE ip_addr = ?';
 $params = array(1 => getIP());

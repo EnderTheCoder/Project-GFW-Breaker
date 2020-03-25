@@ -42,13 +42,25 @@ layui.use('form', function () {
                         if (json['data']['key'] === 'email')
                             layer.alert('该邮箱已被注册，请更换');
                         return false;
-                    case 100:
-                        layer.open({
-                            title: '注册成功'
-                            , content: '您的注册已经通过，请打开您的邮箱查收验证邮件以激活此账户'
+                    case 100: {
+                        layui.use('layer', function () {
+                            let layer = layui.layer;
+                            layer.open({
+                                title: '注册成功',
+                                content: '注册成功,点击确定跳转至登录页',
+                                yes: function (index) {
+                                    window.location.href = 'login.html';
+                                    layer.close(index);
+                                },
+                                cancel: function (index) {
+                                    window.location.href = 'login.html';
+                                    layer.close(index);
+                                    return false;
+                                }
+                            });
                         });
-                        window.location.href = 'login.html';
                         break;
+                    }
                     default:
                         layer.msg('奇怪的错误增加了！');
                 }

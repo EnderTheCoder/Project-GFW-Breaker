@@ -30,14 +30,23 @@ if (id) {
                     $("#blog-content").html(html);
                     break;
                 case 213:
-                    layer.msg('您太快了!慢点吧');
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('您太快了!慢点吧')
+                    });
                     break;
                 default:
-                    layer.msg('发生了未知的错误');
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('发生了未知的错误')
+                    });
             }
         },
         error: function () {
-
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.alert('与服务器连接断开,请检查您的网络')
+            });
         }
     });
 } else {
@@ -62,7 +71,7 @@ if (id) {
                             '<div class="layui-col-xs12 layui-col-sm4 layui-col-md3 blog-frame" id="' +
                             'row-' + json['data'][i]['id'] +
                             '">\n' +
-                            '            <div class="blog-block ' + randomColorClass() +  '">\n' +
+                            '            <div class="blog-block ' + randomColorClass() + '">\n' +
                             '                <h1>\n' +
                             json['data'][i]['title'] +
                             '                </h1>\n' +
@@ -78,14 +87,23 @@ if (id) {
                     }
                     break;
                 case 213:
-                    layer.msg('您太快了!慢点吧');
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('您太快了!慢点吧')
+                    });
                     break;
                 default:
-                    layer.msg('发生了未知的错误');
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('发生了未知的错误')
+                    });
             }
         },
         error: function () {
-
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.alert('与服务器连接断开,请检查您的网络')
+            });
         }
     });
 }

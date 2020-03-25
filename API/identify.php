@@ -45,6 +45,7 @@ switch ($_POST['type']) {
             $return->retMsg('passErr');
         } else $mysql->bind_query($sql, $params);
         $token->session($result[0]['uid'], $result[0]['username']);
+        $_SESSION['admin_session'] = null;
         $return->retMsg('success');
         break;
     case 'register':

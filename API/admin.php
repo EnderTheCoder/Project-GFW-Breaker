@@ -34,6 +34,7 @@ switch ($_POST['type']) {
         $_SESSION['admin_session']['username'] = $result[0]['username'];
         $_SESSION['admin_session']['ip_addr'] = getIP();
         $_SESSION['admin_session']['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $token->sessionDel();
         $return->retMsg('success');
     }
     case 'login-check':
@@ -179,7 +180,7 @@ switch ($_POST['type']) {
     case 'get-access-log':
     {
         if (isEmpty($_POST['id'])) {
-            $sql = 'SELECT id, ip_addr, is_login, timestamp, access_url FROM main_access_log ORDER BY id DESC LIMIT 100';
+            $sql = 'SELECT id, ip_addr, is_login, timestamp, access_url FROM main_access_log WHERE is_login != 1 ORDER BY id DESC LIMIT 500';
             $mysql->bind_query($sql);
             $return->retMsg('success', $mysql->fetch(true));
         } else {

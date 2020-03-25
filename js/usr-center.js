@@ -173,10 +173,18 @@ switch (action) {
                             '</div>';
                         $(".billing-area").append(template);
                     }
+                } else {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.alert('奇怪的错误增加了!')
+                    });
                 }
             },
             error: function () {
-                layer.msg('与服务器失去连接，请检查网络')
+                layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.alert('与服务器失去连接，请检查网络')
+                });
             }
         });
         billing.type = 'billing-top';
@@ -200,10 +208,16 @@ switch (action) {
                         b.html(json['data'][0]['money_out'] - json['data'][0]['money_out']);
                         b.css('color', '#00CC00');
                     }
-                } else layer.msg('奇怪的错误增加了！')
+                } else layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.alert('奇怪的错误增加了!')
+                });
             },
             error: function () {
-                layer.msg('与服务器失去连接，请检查网络')
+                layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.alert('与服务器失去连接，请检查网络')
+                });
             }
         });
         break;
