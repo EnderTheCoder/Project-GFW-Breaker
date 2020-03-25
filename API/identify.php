@@ -72,7 +72,7 @@ switch ($_POST['type']) {
         }
         $_COOKIE = null;
         if ($result[0][$_POST['key']]) $return->retMsg('dupVal');
-        $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time, money) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time, money, multi_device) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
         $params = array(
             1 => $_POST['username'],
             2 => md5($_POST['password'] . PASSWORD_SALT),
@@ -82,6 +82,7 @@ switch ($_POST['type']) {
             5 => null,
             6 => time(),
             7 => getSetting('default_money'),
+            8 => getSetting('default_device_limit'),
         );
         $mysql->bind_query($sql, $params);
         $email_token = md5($_POST['username'] . rand() . time());
