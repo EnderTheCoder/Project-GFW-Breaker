@@ -63,8 +63,14 @@ layui.use('form', function () {
             success: function (result) {
                 let json = eval(result);
                 if (json['code'] === 100) {
-                    layer.alert('发布成功！');
-                    window.location.href = 'admin-blog-publish.html'
+                    layer.open({
+                        title: '成功',
+                        content: '博客已经发布,点击确定刷新此页面',
+                        yes: function (index) {
+                            window.location.href = 'admin-blog-publish.html';
+                            layer.close(index);
+                        }
+                    });
                 } else layer.alert('奇怪的错误增加了！')
             },
             error: function () {

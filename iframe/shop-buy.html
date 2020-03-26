@@ -13,12 +13,27 @@
     <div class="layui-form-item">
         <label class="layui-form-label" for="month">购买月数</label>
         <div class="layui-input-block">
-            <input type="number" id="month" name="month" required lay-verify="required"
-                   placeholder="请输入一个1-12之间的整数" autocomplete="off" class="layui-input">
+            <select name="month" lay-verify="required" id="month">
+                <option value="">请选择订阅时长</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+<!--            <input type="number" id="month" name="month" required lay-verify="required"-->
+<!--                   placeholder="请输入一个1-12之间的整数" autocomplete="off" class="layui-input">-->
         </div>
         <small style="color: #6f42c1">季付9折,半年付8折,年付7折,多买多送</small>
     </div>
-    <button lay-submit class="layui-btn layui-btn-fluid" id="buy-plan-btn" lay-filter="buyPlan">添加</button>
+    <button lay-submit class="layui-btn layui-btn-fluid" id="buy-plan-btn" lay-filter="buyPlan" style="margin-top: 220px">添加</button>
 </form>
 <script src="../js/jquery-3.4.1.js"></script>
 <script src="../layui/layui.js"></script>

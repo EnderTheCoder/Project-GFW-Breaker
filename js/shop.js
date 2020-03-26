@@ -44,7 +44,8 @@ $.ajax({
                                 type: 2,
                                 title: '购买计划',
                                 content: './iframe/shop-buy.html?id=' + json['data'][i]['id'],
-                                area: ['350px', '160px'],
+                                area: ['350px','400px'],
+                                scrollbar: false
                             });
                         });
                     } else {
