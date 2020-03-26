@@ -62,6 +62,7 @@
         dataType: 'json',
         timeout: 5000,
         data: data,
+        async: false,
         success: function (result) {
             let json = eval(result);
             if (json['code'] === 100) {

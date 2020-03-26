@@ -15,10 +15,8 @@ $.ajax({
         let json = eval(result);
         if (json['code'] === 100) {
             if (!json['data']['is_login']) {
-                alert('ACCESS DENIED');
                 window.location.href = 'admin-login.html';
             }
-            // else showFramework();
         } else layui.use('layer', function(){
             let layer = layui.layer;
             layer.alert('奇怪的错误增加了！')

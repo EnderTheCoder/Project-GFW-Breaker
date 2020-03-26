@@ -90,7 +90,7 @@ id=f1991455223%40sina.com&password=123456&sign=0429D9841CB74167F6B259AE38524FEC&
 |参数|用法|
 |---|---|
 |type|必须为字符串'logout'|
-|token|登录时回传的token_value|
+|token|登录时获取的token_value|
 ## 3.握手
 |条目|注解|
 |---|---|
@@ -101,7 +101,7 @@ id=f1991455223%40sina.com&password=123456&sign=0429D9841CB74167F6B259AE38524FEC&
 |参数|用法|
 |---|---|
 |type|必须为字符串'handshake'|
-|token|登录时回传的token_value|
+|token|登录时获取的token_value|
 建议30秒一次，如果失败必须立即重试
 ## 4.获取用户订阅线路列表
 |条目|注解|
@@ -113,6 +113,46 @@ id=f1991455223%40sina.com&password=123456&sign=0429D9841CB74167F6B259AE38524FEC&
 |参数|用法|
 |---|---|
 |type|必须为字符串'get-plan'|
-|token|登录时回传的token_value|
+|token|登录时获取的token_value|
 
-data会返回用户的订阅列表，索引为0到n-1
+data会返回用户的订阅列表，索引为0到n-1,例如
+```
+'data':{
+    {'id':'线路id','config':'完整v2ray配置文件','parent':'线路属于的组名','area':'线路所在的国家或地区'},
+    {'id':'线路id','config':'完整v2ray配置文件','parent':'线路属于的组名','area':'线路所在的国家或地区'},
+    {'id':'线路id','config':'完整v2ray配置文件','parent':'线路属于的组名','area':'线路所在的国家或地区'},
+    ...
+}
+```
+## 5.检查客户端版本
+|条目|注解|
+|---|---|
+|请求方式|POST|
+|返回值格式|application/json|
+|地址|http:///API/app.php|
+
+|参数|用法|
+|---|---|
+|type|必须为字符串'version-check'|
+
+data会返回当前最新的版本号,string类型,例如
+```
+'data':{'version':'1.0.0.1'}
+```
+## 6.更新流量使用情况
+|条目|注解|
+|---|---|
+|请求方式|POST|
+|返回值格式|application/json|
+|地址|http:///API/app.php|
+
+|参数|用法|
+|---|---|
+|type|必须为字符串'flow-update'|
+|token|登录时获取的token_value|
+|vmess_id|当前正在使用的线路id|
+|flow|当前数据使用总量与上一次调用此接口时数据使用总量的差,单位为字节|
+
+注意:该接口首先应定时调用,其次,当用户切换线路时,应立即上传当前线路的数据使用情况.
+
+data为空
