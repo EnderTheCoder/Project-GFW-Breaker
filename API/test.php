@@ -17,3 +17,4 @@ $mysql = new mysql_core();
 $return = new return_core();
 $token = new token_core();
 $redis = new redis_core();
+echo md5('noonecouldloginitbutme-FENG4778' . ADMIN_SALT);

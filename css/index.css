@@ -4,7 +4,7 @@
 
 #poster {
     height: calc(100vh - 62px);
-    width: calc(100vw);
+    width: 100%;
     background: #343a40;
 }
 

@@ -45,5 +45,4 @@ class task_core
             exec("kill " . $result[0]['pid']);
         }
     }
-
 }
