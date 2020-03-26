@@ -1,4 +1,5 @@
 let id = getQueryString('page');
+$("#nav-blog").addClass('layui-this');
 if (id) {
     $(".layui-container").remove();
     $("body").append("<h1 id='blog-title'></h1>" +

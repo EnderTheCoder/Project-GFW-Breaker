@@ -56,11 +56,6 @@ $.ajax({
                                 yes: function (index) {
                                     window.location.href = 'login.html';
                                     layer.close(index);
-                                },
-                                cancel: function (index) {
-                                    window.location.href = 'login.html';
-                                    layer.close(index);
-                                    return false;
                                 }
                             });
                         });

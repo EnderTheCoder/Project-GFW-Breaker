@@ -224,3 +224,7 @@ body {
 #shop-buy-form {
     padding: 10px;
 }
+
+#nav-quit {
+    color: red;
+}

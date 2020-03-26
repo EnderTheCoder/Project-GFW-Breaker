@@ -34,7 +34,7 @@ $.ajax({
                     <dd><a href="usr-center.html?action=plan">订阅计划</a></dd>
                     <dd><a href="usr-center.html?action=billing">用户账单</a></dd>
                     <dd><a href="usr-center.html?action=setting">用户设置</a></dd>
-                    <dd><a href="index.html?action=quit">退出登录</a></dd>
+                    <dd id="nav-qiut"><a href="index.html?action=quit">退出登录</a></dd>
                 </dl>
             </li>`);
             is_login = true;

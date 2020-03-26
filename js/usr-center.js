@@ -1,3 +1,4 @@
+$("#nav-usr-center").addClass('layui-this');
 $.ajax({
     url: 'API/loginCheck.php',
     type: "POST",

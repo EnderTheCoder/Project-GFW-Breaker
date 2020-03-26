@@ -30,11 +30,11 @@ switch ($_POST['type']) {
         $params = array(1 => $_POST['id']);
         $result = $mysql->bind_query($sql, $params);
         if ($result[0]['username'] !== $_POST['id'] || $result[0]['password'] !== md5($_POST['password'] . ADMIN_SALT)) $return->retMsg('passErr');
+        $token->sessionDel();
         $_SESSION['admin_session']['id'] = $result[0]['id'];
         $_SESSION['admin_session']['username'] = $result[0]['username'];
         $_SESSION['admin_session']['ip_addr'] = getIP();
         $_SESSION['admin_session']['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-        $token->sessionDel();
         $return->retMsg('success');
     }
     case 'login-check':
