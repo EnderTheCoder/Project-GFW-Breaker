@@ -8,6 +8,14 @@ $("body").prepend(`
     </li>
     <li class="layui-nav-item" id="nav-shop"><a href="shop.html">购买计划</a></li>
     <li class="layui-nav-item" id="nav-blog"><a href="blog.html">官方博客</a></li>
+    <li class="layui-nav-item" id="nav-client">
+                <a href="#">客户端下载</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="client.html?type=windows">Windows</a></dd>
+                    <dd><a href="client.html?type=linux">Linux</a></dd>
+                    <dd><a href="client.html?type=android">Android</a></dd>
+                </dl>
+            </li>
     <li class="layui-nav-item" id="nav-support"><a href="">服务支持</a></li>
     <li class="layui-nav-item" id="nav-survey"><a href="">用户调查</a></li>
 </ul>

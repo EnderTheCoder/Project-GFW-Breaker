@@ -92,6 +92,38 @@ body {
     padding: 30px;
 }
 
+#blog-content h1{
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 50px;
+}
+#blog-content h2{
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 45px;
+}
+#blog-content h3{
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 45px;
+}
+#blog-content h4{
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 40px;
+}
+#blog-content h5{
+    font-size: 18px;
+    line-height: 40px;
+}
+#blog-content h6{
+    font-weight: lighter;
+    font-size: 18px;
+    line-height: 40px;
+}
+#blog-content p{
+    font-size: 18px;
+}
 .plan-box {
 
 }

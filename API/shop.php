@@ -30,10 +30,10 @@ switch ($_POST['type']) {
     {
         if (!$token->sessionJudge()) $return->setMsg('tokenFailed');
         if (isEmpty($_POST['id']) || isEmpty($_POST['month'])) $return->retMsg('emptyParam');
-        if ($_POST['month'] < 3) $discount = 1;
-        if ($_POST['month'] == 12) $discount = 0.7;
-        if ($_POST['month'] >= 3 && $_POST['month'] < 6) $discount = 0.8;
-        if ($_POST['month'] >= 6 && $_POST['month'] < 12) $discount = 0.9;
+        if ($_POST['month'] < 3) $discount = getSetting('global_discount');
+        if ($_POST['month'] == 12) $discount = getSetting('whole_year_discount');
+        if ($_POST['month'] >= 3 && $_POST['month'] < 6) $discount = getSetting('season_discount');
+        if ($_POST['month'] >= 6 && $_POST['month'] < 12) $discount = getSetting('half_year_discount');
         $sql = 'SELECT * FROM main_plan WHERE id = ?';
         $params = array(1 => $_POST['id']);
         $mysql->bind_query($sql, $params);
