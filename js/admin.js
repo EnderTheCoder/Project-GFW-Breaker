@@ -13,17 +13,21 @@ $.ajax({
     async: false,
     success: function (result) {
         let json = eval(result);
-        if (json['code'] === 100) {
-            if (!json['data']['is_login']) {
+        switch (json['code']) {
+            case 100:
+                return;
+            case 207:
                 window.location.href = 'admin-login.html';
-            }
-        } else layui.use('layer', function(){
-            let layer = layui.layer;
-            layer.alert('奇怪的错误增加了！')
-        });
+                break;
+            default:
+                layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.alert('奇怪的错误增加了！')
+                });
+        }
     },
     error: function () {
-        layui.use('layer', function(){
+        layui.use('layer', function () {
             let layer = layui.layer;
             layer.alert('与服务器失去连接，请检查网络')
         });

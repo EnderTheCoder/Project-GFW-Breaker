@@ -16,3 +16,9 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.layui-form-item img {
+    width: 100px;
+    height: 38px;
+    float: left;
+}

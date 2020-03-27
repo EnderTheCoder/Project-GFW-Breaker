@@ -46,7 +46,9 @@ function getIP()
 
 function adminStateCheck()
 {
-    return !isEmpty($_SESSION['admin_session']) && $_SESSION['admin_session']['ip_addr'] == getIP() && $_SESSION['admin_session']['user_agent'] == $_SERVER['HTTP_USER_AGENT'];
+    return !isEmpty($_SESSION['admin_session']) &&
+        $_SESSION['admin_session']['ip_addr'] == getIP() &&
+        $_SESSION['admin_session']['user_agent'] == $_SERVER['HTTP_USER_AGENT'];
 }
 
 function countX($array)

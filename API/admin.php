@@ -21,39 +21,36 @@ if ($_POST['app_id'] != 3) $return->retMsg('signErr');
 $sign->initParams($_POST);
 if ($sign->checkSign() !== true) $return->retMsg($sign->checkSign());
 if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
+if (!adminStateCheck()) $return->retMsg('passErr');
 switch ($_POST['type']) {
-    case 'login':
-    {
-        if (isEmpty($_POST['id']) || isEmpty($_POST['password']) || isEmpty($_POST['captcha'])) $return->retMsg('emptyParam');
-        if (!captchaCheck()) $return->retMsg('captchaErr');
-        $sql = 'SELECT id, username, password FROM main_admin WHERE username = ?';
-        $params = array(1 => $_POST['id']);
-        $result = $mysql->bind_query($sql, $params);
-        if ($result[0]['username'] !== $_POST['id'] || $result[0]['password'] !== md5($_POST['password'] . ADMIN_SALT)) $return->retMsg('passErr');
-        $token->sessionDel();
-        $_SESSION['admin_session']['id'] = $result[0]['id'];
-        $_SESSION['admin_session']['username'] = $result[0]['username'];
-        $_SESSION['admin_session']['ip_addr'] = getIP();
-        $_SESSION['admin_session']['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-        $return->retMsg('success');
-    }
+//    case 'login':
+//    {
+//        if (isEmpty($_POST['id']) || isEmpty($_POST['password']) || isEmpty($_POST['captcha'])) $return->retMsg('emptyParam');
+//        if (!captchaCheck()) $return->retMsg('captchaErr');
+//        $sql = 'SELECT id, username, password, level FROM main_admin WHERE username = ?';
+//        $params = array(1 => $_POST['id']);
+//        $result = $mysql->bind_query($sql, $params);
+//        if ($result[0]['username'] !== $_POST['id'] || $result[0]['password'] !== md5($_POST['password'] . ADMIN_SALT)) $return->retMsg('passErr');
+//        $token->sessionDel();
+//        $_SESSION['admin_session']['id'] = $mysql->fetchLine('id');
+//        $_SESSION['admin_session']['username'] = $mysql->fetchLine('username');
+//        $_SESSION['admin_session']['ip_addr'] = getIP();
+//        $_SESSION['admin_session']['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+//        $_SESSION['admin_session']['lvl'] = $mysql->fetchLine('level');
+//        $return->retMsg('success');
+//    }
     case 'login-check':
     {
-        $result = array('is_login' => false);
-        if (!adminStateCheck()) $return->retMsg('success', $result);
-        $result['is_login'] = true;
-        $return->retMsg('success', $result);
+        $return->retMsg('success');
     }
     case 'access-log-checkout':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
         $sql = 'SELECT * FROM main_access_log ORDER BY id DESC LIMIT 500';
         $result = $mysql->bind_query($sql);
         $return->retMsg('success', $result);
     }
     case 'add-vmess-group':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['name']) || isEmpty($_POST['speed_rank']) ||
             isEmpty($_POST['flow_limit']) || isEmpty($_POST['price']) ||
             isEmpty($_POST['cnt']) || isEmpty(['rows'])) $return->retMsg('emptyParam');
@@ -76,7 +73,7 @@ switch ($_POST['type']) {
     }
     case 'get-vmess-group':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         $sql = 'SELECT * FROM main_vmess_group';
         if (isEmpty($_POST['id'])) {
             $result = $mysql->bind_query($sql);
@@ -92,7 +89,7 @@ switch ($_POST['type']) {
 
     case 'edit-vmess-group':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['id']) || isEmpty($_POST['key']) || isEmpty($_POST['value'])) $return->retMsg('emptyParam');
         $sql = 'UPDATE main_vmess_group SET ? = ? WHERE id = ?';
         $params = array(
@@ -106,7 +103,7 @@ switch ($_POST['type']) {
 
     case 'delete-vmess-group':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['id'])) $return->retMsg('emptyParam');
         $sql = 'DELETE FROM main_vmess_group WHERE id = ?';
         $params = array(1 => $_POST['id']);
@@ -116,7 +113,7 @@ switch ($_POST['type']) {
 
     case 'get-plan':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt FROM main_plan';
         if (!isEmpty($_POST['id'])) {
             $sql = 'SELECT id, `name`, price, flow_limit, buy_cnt, son, info FROM main_plan WHERE id = ?';
@@ -139,7 +136,7 @@ switch ($_POST['type']) {
 
     case 'add-plan':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['name']) || isEmpty($_POST['price']) || isEmpty($_POST['flow_limit']) || isEmpty($_POST['son']) || isEmpty($_POST['info'])) $return->retMsg('emptyParam');
         $sql = 'INSERT INTO main_plan (name, price, flow_limit, son, info) VALUES (?, ?, ?, ?, ?)';
         $params = array(
@@ -155,7 +152,7 @@ switch ($_POST['type']) {
 
     case 'edit-plan':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['id']) || isEmpty($_POST['key']) || isEmpty($_POST['value'])) $return->retMsg('emptyParam');
         $sql = 'UPDATE main_plan SET ? = ? WHERE id = ?';
         $params = array(
@@ -169,7 +166,7 @@ switch ($_POST['type']) {
 
     case 'delete-plan':
     {
-        if (!adminStateCheck()) $return->retMsg('passErr');
+//        if (!adminStateCheck()) $return->retMsg('passErr');
         if (isEmpty($_POST['id'])) $return->retMsg('emptyParam');
         $sql = 'DELETE FROM main_plan WHERE id = ?';
         $params = array(1 => $_POST['id']);
