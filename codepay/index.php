@@ -6,7 +6,7 @@
  * Time: 15:03
  */
 error_reporting(E_ALL & ~E_NOTICE);
-//session_start(); //开启session
+session_start(); //开启session
 require_once("codepay_config.php"); //导入配置文件
 
 
@@ -79,12 +79,12 @@ if ((int)$codepay_config['id'] <= 1) { //未修改配置文件
 </head>
 <body>
 <div id="loadingPicBlock" style="max-width: 720px;margin:0 auto;" class="pay">
-    <header class="g-header">
-
-        <div class="head-r">
-            <a href="/" class="z-HReturn" data-dismiss="modal" aria-hidden="true"><s></s><b>首页</b></a>
-        </div>
-    </header>
+<!--    <header class="g-header">-->
+<!---->
+<!--        <div class="head-r">-->
+<!--            <a href="/" class="z-HReturn" data-dismiss="modal" aria-hidden="true"><s></s><b>首页</b></a>-->
+<!--        </div>-->
+<!--    </header>-->
 
     <div class="g-Total gray9">请选择需要充值的金额</div>
     <section class="clearfix g-member">
@@ -102,33 +102,32 @@ if ((int)$codepay_config['id'] <= 1) { //未修改配置文件
         <form action="codepay.php" method="post">
             <article class="clearfix mt10 m-round g-pay-ment g-bank-ct">
                 <ul id="ulBankList">
-                    <li class="gray6" style="width: 100%;padding: 5px 0px 0px 10px;height: 50px;">您选择充值：<label
-                            class="input" style="border: 1px solid #EAEAEA;height: 35px;font-size:30px;">
+                    <li class="gray6" style="width: 100%;padding: 5px 0px 0px 10px;height: 50px;display: none;">您选择充值：<label
+                                class="input" style="border: 1px solid #EAEAEA;height: 35px;font-size:30px;">
                             <input type="text" name="price" id="price" placeholder="如：50" value="50"
                                    style="width: 170px;color: red;font-size:20px;">   <!--默认输入金额值50-->
                         </label> 元
                     </li>
                     <li class="gray6"
-                        style="width: 100%;padding: 5px 0px 0px 10px;display: <?php echo $codepay_config['userOff'] && $user ? 'none' : 'inline'; ?>;height: 50px;">
+                        style="width: 100%;padding: 5px 0px 0px 10px;display: none;height: 50px;">
                         充值用户名：<label
-                            class="input" style="border: 1px solid #EAEAEA;height: 30px;font-size: 30px;">
-                            <input type="text" name="user" id="user" placeholder="用户名" value="<?php echo $user ?>"
+                                class="input" style="border: 1px solid #EAEAEA;height: 30px;font-size: 30px;">
+                            <input type="text" name="user" id="user" placeholder="用户名" value="<?php echo $_SESSION['uid'] ?>"
                                    style="width: 180px;font-size: 16px;">
                         </label></li>
-                    <li paytype="1" class="gray9" type="codePay" style="width: 33%">
-                        <a href="javascript:;" class="z-initsel"><img src="img/alipay.jpg"><s></s></a>
-
-                    </li>
+<!--                    <li paytype="1" class="gray9" type="codePay" style="width: 33%">-->
+<!--                        <a href="javascript:;" class="z-initsel"><img src="img/alipay.jpg"><s></s></a>-->
+<!--                    </li>-->
                     <li paytype="3" class="gray9" type="codePay" style="width: 33%">
                         <a href="javascript:;"><img src="img/weixin.jpg"><s></s></a>
-
                     </li>
-                    <li paytype="2" class="gray9" type="codePay" style="width: 33%">
-                        <a href="javascript:;"><img src="img/qqpay.jpg"><s></s></a>
-                    </li>
+<!--                    <li paytype="2" class="gray9" type="codePay" style="width: 33%">-->
+<!--                        <a href="javascript:;"><img src="img/qqpay.jpg"><s></s></a>-->
+<!--                    </li>-->
+                    <li class="gray9"><small>注意:如果您的实际付款金额和选择不符,订单不会生效,并且由此带来的损失将由您个人承担</small></li>
                 </ul>
             </article>
-            <input type="hidden" id="pay_type" value="1" name="type"> <!--值1表示支付宝默认-->
+            <input type="hidden" id="pay_type" value="3" name="type"> <!--值1表示支付宝默认-->
             <input type="hidden" value="<?php echo $salt; ?>" name="salt">
 
             <div class="mt10 f-Recharge-btn">
@@ -155,14 +154,14 @@ if ((int)$codepay_config['id'] <= 1) { //未修改配置文件
                         n.children("a").addClass("z-sel");
                         n.siblings().children().removeClass("z-sel").removeClass("z-initsel");
                         var needMoney = parseFloat(n.attr("money")).toFixed(2);
-                        if (needMoney <= 0)needMoney = 0.01;
+                        if (needMoney <= 0) needMoney = 0.01;
                         $("#price").val(needMoney);
                     })
                 });
                 $("#ulBankList > li").each(function (m) {
                     var n = $(this);
                     n.click(function () {
-                        if (m < 2)return;
+                        if (m < 2) return;
                         $("#pay_type").val(n.attr("payType"));
                         n.children("a").addClass("z-initsel");
                         n.siblings().children().removeClass("z-initsel");

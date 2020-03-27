@@ -44,7 +44,7 @@
         let form = layui.form;
         form.on('submit(buyPlan)', function (data) {
             let json = data.field;
-            json.app_id = 3;
+            json.app_id = 1;
             json.type = 'buy';
             json.timestamp = getUnixTS();
             json.id = getQueryString('id');
@@ -55,7 +55,7 @@
                 'month' + json.month +
                 'timestamp' + json.timestamp +
                 'type' + json.type +
-                'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
+                '6ab43fb5a4d624f9fa000bc83ccef011').toUpperCase();
             $.ajax({
                 url: '../API/shop.php',
                 type: "POST",
