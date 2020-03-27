@@ -23,6 +23,7 @@ if (id) {
             let json = eval(result);
             switch (json['code']) {
                 case 100:
+                    $("title").html('GFW-Breaker ' + json['data'][0]['title']);
                     let converter = new Markdown.Converter();
                     let html = converter.makeHtml(json['data'][0]['content']);
                     $("#blog-title").html(json['data'][0]['title']);

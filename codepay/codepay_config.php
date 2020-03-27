@@ -167,7 +167,7 @@ define('DB_ENCODE', $codepay_config['chart'] == 'utf-8' ? 'utf8' : $codepay_conf
  */
 define('DB_USERTABLE', 'main_users');  //充值用户所在数据库表名
 define('DB_USERMONEY', 'money');  //充值用户所在表中的金额字段名
-define('DB_USERNAME', 'username');  //充值用户名的字段名 根据用户名转换为id
+define('DB_USERNAME', 'uid');  //充值用户名的字段名 根据用户名转换为id
 
 
 ?>

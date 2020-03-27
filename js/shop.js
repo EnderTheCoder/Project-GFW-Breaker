@@ -9,10 +9,15 @@ area.append(`
 </div>
 `);
 let data = {};
-data.app_id = 3;
+data.app_id = 1;
 data.type = 'get-plan';
 data.timestamp = getUnixTS();
-data.sign = $.md5('app_id3timestamp' + data.timestamp + 'type' + data.type + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93');
+data.sign = $.md5(
+    'app_id' + data.app_id +
+    'timestamp' + data.timestamp +
+    'type' + data.type +
+    '6ab43fb5a4d624f9fa000bc83ccef011'
+);
 data.sign = data.sign.toUpperCase();
 $.ajax({
     url: 'API/shop.php',
@@ -44,7 +49,7 @@ $.ajax({
                                 type: 2,
                                 title: '购买计划',
                                 content: './iframe/shop-buy.html?id=' + json['data'][i]['id'],
-                                area: ['350px','400px'],
+                                area: ['350px', '400px'],
                                 scrollbar: false
                             });
                         });

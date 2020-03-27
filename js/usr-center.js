@@ -57,8 +57,8 @@ switch (action) {
                             json['data'][i]['id'] +
                             '">' +
                             (json['data']['chosen'] === json['data'][i]['id'] ? '已选中' : '选择') + '</button>' +
-                            '            </div>' +
-                            '        </div>'
+                            '</div>' +
+                            '</div>'
                         );
                         if (json['data']['chosen'] !== json['data'][i]['id'])
                             $("#plan-btn-" + json['data'][i]['id']).click(function () {
@@ -119,10 +119,23 @@ switch (action) {
             '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
             '            <span>收入：</span><span id="billing-d"></span><span>&nbsp;CNY</span>\n' +
             '        </div>\n' +
+            '<button type="button" class="layui-btn layui-btn-fluid layui-btn-normal recharge-btn">充值</button>' +
             '    </div>\n' +
             '    <div class="layui-row billing-area">\n' +
             '    </div>\n' +
             '</div>');
+        $(".recharge-btn").click(function () {
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    title: '充值',
+                    content: './codepay/index.php',
+                    area: ['400px','400px'],
+                    scrollbar: false
+                });
+            });
+        });
         let billing = {};
         billing.app_id = 1;
         billing.type = 'billing-all';
