@@ -23,9 +23,16 @@ layui.use('form', function () {
         data.field.timestamp = getUnixTS();
         data.field.app_id = 1;
         data.field.type = 'register';
-        data.field.sign = $.md5('app_id1email' + data.field.email + 'password' + data.field.password + 'timestamp' + data.field.timestamp + 'type' + data.field.type + 'username' + data.field.username + '6ab43fb5a4d624f9fa000bc83ccef011');
-        data.field.sign = data.field.sign.toUpperCase();
-        console.log(data.field);
+        data.field.sign = $.md5(
+            'app_id' + data.field.app_id +
+            'captcha' + data.field.captcha +
+            'email' + data.field.email +
+            'password' + data.field.password +
+            'timestamp' + data.field.timestamp +
+            'type' + data.field.type +
+            'username' + data.field.username +
+            '6ab43fb5a4d624f9fa000bc83ccef011'
+        ).toUpperCase();
         $.ajax({
             url: 'API/identify.php',
             type: "POST",
@@ -38,10 +45,13 @@ layui.use('form', function () {
                 switch (json['code']) {
                     case 211:
                         if (json['data']['key'] === 'username')
-                            layer.alert('该用户名已被注册，请更换');
+                            layer.msg('该用户名已被注册，请更换');
                         if (json['data']['key'] === 'email')
-                            layer.alert('该邮箱已被注册，请更换');
+                            layer.msg('该邮箱已被注册，请更换');
                         return false;
+                    case 210:
+                        layer.msg('验证码错误');
+                        break;
                     case 100: {
                         layui.use('layer', function () {
                             let layer = layui.layer;
@@ -66,9 +76,13 @@ layui.use('form', function () {
                 }
             },
             error: function () {
-
+                layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.alert('与服务器失去连接，请检查网络后重试')
+                });
             }
         });
+        $("img").attr('src', 'API/captcha.php?rand=' + Math.random());
         return false;
     });
 });

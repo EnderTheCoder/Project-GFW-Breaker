@@ -49,12 +49,12 @@
             button.addClass('layui-btn-disabled');
             let json = data.field;
             json.timestamp = getUnixTS();
-            json.type = 'login';
+            json.type = 'admin-login';
             json.app_id = 3;
             json.sign = $.md5('app_id3captcha' + json.captcha + 'id' + json.id + 'password' + json.password + 'timestamp' + json.timestamp + 'type' + json.type + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93');
             json.sign = json.sign.toUpperCase();
             $.ajax({
-                url: 'API/admin.php',
+                url: 'API/identify.php',
                 type: "POST",
                 dataType: 'json',
                 async: false,
@@ -85,6 +85,7 @@
                     layer.alert('发生了未知的错误!');
                 }
             });
+            $("img").attr('src', 'API/captcha.php?rand=' + Math.random());
             button.addClass('layui-bg-blue');
             button.removeClass('layui-btn-disabled');
             return false;

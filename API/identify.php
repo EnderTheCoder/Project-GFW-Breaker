@@ -22,7 +22,8 @@ if ($sign->checkSign() !== true) $return->retMsg($sign->checkSign());
 if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
 switch ($_POST['type']) {
     case 'login':
-        if (isEmpty($_POST['id']) || isEmpty($_POST['password'])) $return->retMsg('emptyParam');
+        if (isEmpty($_POST['id']) || isEmpty($_POST['password']) || isEmpty($_POST['captcha'])) $return->retMsg('emptyParam');
+        if (!captchaCheck()) $return->retMsg('captchaErr');
         $sql = 'SELECT *  FROM main_users';
         if (strstr($_POST['id'], '@') !== false) $sql .= ' WHERE email = ?';
         else $sql .= ' WHERE username = ?';
@@ -48,9 +49,27 @@ switch ($_POST['type']) {
         $_SESSION['admin_session'] = null;
         $return->retMsg('success');
         break;
+    case 'admin-login':
+    {
+        if ($_POST['app_id'] != 3) $return->retMsg('signErr');
+        if (isEmpty($_POST['id']) || isEmpty($_POST['password']) || isEmpty($_POST['captcha'])) $return->retMsg('emptyParam');
+        if (!captchaCheck()) $return->retMsg('captchaErr');
+        $sql = 'SELECT id, username, password, level FROM main_admin WHERE username = ?';
+        $params = array(1 => $_POST['id']);
+        $result = $mysql->bind_query($sql, $params);
+        if ($result[0]['username'] !== $_POST['id'] || $result[0]['password'] !== md5($_POST['password'] . ADMIN_SALT)) $return->retMsg('passErr');
+        $token->sessionDel();
+        $_SESSION['admin_session']['id'] = $mysql->fetchLine('id');
+        $_SESSION['admin_session']['username'] = $mysql->fetchLine('username');
+        $_SESSION['admin_session']['ip_addr'] = getIP();
+        $_SESSION['admin_session']['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $_SESSION['admin_session']['lvl'] = $mysql->fetchLine('level');
+        $return->retMsg('success');
+    }
     case 'register':
-        if (isEmpty($_POST['username']) || isEmpty($_POST['password']) || isEmpty($_POST['email']))
+        if (isEmpty($_POST['username']) || isEmpty($_POST['password']) || isEmpty($_POST['email']) || isEmpty($_POST['captcha']))
             $return->retMsg('emptyParam');
+        if (!captchaCheck()) $return->retMsg('captchaErr');
         $sql = 'SELECT username, email FROM main_users WHERE username = ? OR email = ?';
         $params = array(
             1 => $_POST['username'],

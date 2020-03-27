@@ -42,6 +42,16 @@
                        class="layui-input" id="re-password">
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="captcha">验证码</label>
+            <div class="layui-input-inline" style="width: 238px; margin-right: 0">
+                <input type="text" name="captcha" required lay-verify="required" placeholder="请输入图形验证码"
+                       class="layui-input" id="captcha" maxlength="4" autocomplete="off">
+            </div>
+            <img src="API/captcha.php" alt="验证码" style="height: 38px; float: left"
+                 onclick="this.src='API/captcha.php?rand=' + Math.random()">
+
+        </div>
         <button class="layui-btn layui-btn-fluid" lay-filter="register" lay-submit>注册</button>
     </form>
 </div>
