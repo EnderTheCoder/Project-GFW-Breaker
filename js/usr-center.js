@@ -14,10 +14,10 @@ $.ajax({
     }
 });
 let action = getQueryString('action');
-let body = $("body");
+let body = $("#main-content-area");
 switch (action) {
     case 'plan':
-        body.append("<div class=\"layui-container\"><div class=\"layui-row\"></div></div>\n");
+        body.append("<div class=\"layui-container\"><div class=\"layui-row\" id='plan-area'></div></div>\n");
         let json = {};
         json.app_id = 1;
         json.type = 'plan-all';
@@ -35,7 +35,7 @@ switch (action) {
                 let json = eval(result);
                 if (json['code'] === 100) {
                     for (let i = 0; i < json['data']['row']; i++) {
-                        $(".layui-row").append(
+                        $("#plan-area").append(
                             '<div class="layui-col-xs12 layui-col-sm6 layui-col-md4 plan-box">' +
                             '            <div class="plan-block">' +
                             '                <h2>' +
