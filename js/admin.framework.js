@@ -39,7 +39,6 @@ $("body").prepend(`
 `);
 layui.use('element', function () {
     let element = layui.element;
-
 });
 
 function disableLogin() {

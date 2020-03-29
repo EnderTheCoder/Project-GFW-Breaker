@@ -115,6 +115,11 @@ class return_core
         $this->retVal = array_merge($this->retVal, $params);
     }
 
+    public function setCount($count)
+    {
+        $this->retVal['count'] = $count;
+    }
+
     public function run()
     {
         $this->jsonReturn($this->retVal);
