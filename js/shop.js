@@ -34,9 +34,9 @@ $.ajax({
                 <div class="layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg-3">
                     <div class="shop-plan-block ` + randomColorClass() + `">
                         <h2>` + json['data'][i]['name'] + `</h2>
-                        <div><span>流量：</span>` + json['data'][i]['flow_limit'] + `GB/月</div>
-                        <div><span>价格：</span>￥` + json['data'][i]['price'] + `/月</div>
-                        <div><span>介绍：</span>` + json['data'][i]['info'] + `</div>
+                        <p><span>流量：</span>` + json['data'][i]['flow_limit'] + `GB/月</p>
+                        <p><span>价格：</span>￥` + json['data'][i]['price'] + `/月</p>
+                        <p><span>介绍：</span>` + json['data'][i]['info'] + `</p>
                         <button type="button" class="layui-btn layui-btn-fluid" id="shop-buy-btn-` + json['data'][i]['id'] + `">购买</button>
                     </div>
                 </div>

@@ -249,11 +249,14 @@ body {
     font-size: 30px;
 }
 
-.shop-plan-block div {
+.shop-plan-block p {
+    word-wrap: break-word;
+    word-break: break-all;
     text-align: center;
     height: 50px;
     line-height: 50px;
     font-size: large;
+    overflow: auto;
 }
 
 .shop-plan-block span {
@@ -297,6 +300,10 @@ footer {
     font-size: 20px;
     line-height: 80px;
     text-align: center;
+    color: #9F9F9F;
+}
+
+footer a {
     color: #9F9F9F;
 }
 

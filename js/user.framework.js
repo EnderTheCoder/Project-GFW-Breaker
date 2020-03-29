@@ -16,8 +16,8 @@ $("body").prepend(`
                     <dd><a href="client.html?type=android">Android</a></dd>
                 </dl>
             </li>
-    <li class="layui-nav-item" id="nav-support"><a href="">服务支持</a></li>
-    <li class="layui-nav-item" id="nav-survey"><a href="">用户调查</a></li>
+<!--    <li class="layui-nav-item" id="nav-support"><a href="">服务支持</a></li>-->
+<!--    <li class="layui-nav-item" id="nav-survey"><a href="">用户调查</a></li>-->
 </ul>
 <div id="main-content-area">
     
@@ -25,7 +25,7 @@ $("body").prepend(`
 <footer>
 <div class="layui-container">
     <div class="layui-row">
-        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">© 2020 GFW-Breaker, Inc.</div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">©2020 GFW-Breaker,.Inc.</div>
         <div class="layui-col-xs12 layui-col-sm6 layui-col-md6"><a href="https://t.me/ZHGFWBreaker">加入Telegram官方售后群</a></div>
     </div>
     </div>
