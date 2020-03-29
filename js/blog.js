@@ -1,8 +1,14 @@
 let id = getQueryString('page');
 $("#nav-blog").addClass('layui-this');
+$("#main-content-area").append(`
+<div class="layui-container">
+    <div class="layui-row" id="blog-append-area">
+    </div>
+</div>`);
 if (id) {
     $(".layui-container").remove();
-    $("body").append("<h1 id='blog-title'></h1>" +
+    $("#main-content-area").append(
+        "<h1 id='blog-title'></h1>" +
         "<div id='blog-author'></div>" +
         "<div id='blog-time'></div>" +
         "<div id='blog-content'></div>");

@@ -13,5 +13,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://breakerg.com:3306/GFW-Breaker</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="@156.251.164.126" uuid="2803d750-5c7a-4ad2-85a2-2add0aaa5aa9">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://156.251.164.126:3306</jdbc-url>
+    </data-source>
   </component>
 </project>

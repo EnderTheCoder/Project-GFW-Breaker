@@ -290,3 +290,68 @@ body {
     position: relative;
     bottom: 100px;
 }
+
+footer {
+    width: 100%;
+    background-color: #1b1e21;
+    height: 80px;
+    font-size: 20px;
+    line-height: 80px;
+    text-align: center;
+    color: #9F9F9F;
+}
+
+#main-content-area {
+    min-height: calc(100vh);
+}
+
+#logo {
+    height: 58px;
+}
+
+#poster {
+    height: calc(100vh - 62px);
+    width: 100%;
+    background: #343a40;
+}
+
+
+#poster .layui-row {
+    padding-top: calc(30vh);
+}
+
+#poster .layui-row div {
+    font-size: 10vw;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #5a6068;
+}
+
+body {
+    background-color: #333333;
+}
+
+#content .layui-row {
+    padding: 10px;
+    background-color: #333340;
+    margin-top: 15px;
+}
+
+#content img {
+    width: 325px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.show-title {
+    font-size: 50px;
+    color: #cccccc;
+}
+
+.show-content {
+    font-size: 24px;
+    color: #8D8D8D;
+
+}
+

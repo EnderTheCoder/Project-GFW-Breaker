@@ -22,6 +22,14 @@ $("body").prepend(`
 <div id="main-content-area">
     
 </div>
+<footer>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">© 2020 GFW-Breaker, Inc.</div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6"><a href="https://t.me/ZHGFWBreaker">加入Telegram官方售后群</a></div>
+    </div>
+    </div>
+</footer>
 `);
 let area = $("#nav-list");
 if (getQueryString('action') === 'quit')
@@ -73,6 +81,6 @@ $.ajax({
         });
     }
 });
-layui.use('element', function(){
+layui.use('element', function () {
     let element = layui.element;
 });
