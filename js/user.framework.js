@@ -39,7 +39,9 @@ $.ajax({
     type: "POST",
     dataType: 'json',
     async: false,
-    timeout: 5000,
+    timeout: 3000,
+    tryCount: 0,
+    retryLimit: 5,
     success: function (result) {
         let json = eval(result);
         if (json['data']['is_login']) {
@@ -67,18 +69,25 @@ $.ajax({
         }
     },
     error: function () {
-        area.append(`
+        if (this.tryCount === 0) {
+            area.append(`
         <li class="layui-nav-item">
             <a href="login.html">登录</a>
         </li>
         <li class="layui-nav-item">
             <a href="register.html">注册</a>
         </li>`);
-        is_login = false;
-        layui.use('layer', function () {
-            let layer = layui.layer;
-            layer.alert('与服务器失去连接，请检查网络')
-        });
+            is_login = false;
+        }
+        if (this.tryCount < this.retryLimit) {
+            this.tryCount++;
+            $.ajax(this);
+        } else {
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.msg('连接服务器超时,请检查您的网络连接后重试')
+            });
+        }
     }
 });
 layui.use('element', function () {

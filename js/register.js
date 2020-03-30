@@ -38,8 +38,10 @@ layui.use('form', function () {
             type: "POST",
             dataType: 'json',
             async: false,
-            timeout: 5000,
+            timeout: 2000,
             data: data.field,
+            tryCount: 0,
+            retryLimit: 5,
             success: function (result) {
                 let json = eval(result);
                 switch (json['code']) {
@@ -76,10 +78,15 @@ layui.use('form', function () {
                 }
             },
             error: function () {
-                layui.use('layer', function () {
-                    let layer = layui.layer;
-                    layer.alert('与服务器失去连接，请检查网络后重试')
-                });
+                if (this.tryCount < this.retryLimit) {
+                    this.tryCount++;
+                    $.ajax(this);
+                } else {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.msg('连接服务器超时,请检查您的网络连接后重试')
+                    });
+                }
             }
         });
         $("img").attr('src', 'API/captcha.php?rand=' + Math.random());

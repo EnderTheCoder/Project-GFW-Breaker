@@ -5,11 +5,24 @@ $.ajax({
     dataType: 'json',
     async: true,
     timeout: 3000,
+    tryCount: 0,
+    retryLimit: 5,
     success: function (result) {
         let json = eval(result);
         if (!json['data']['is_login']) {
             alert("登录已过期或失效！请重新登录");
             window.location.href = "index.html";
+        }
+    },
+    error: function () {
+        if (this.tryCount < this.retryLimit) {
+            this.tryCount++;
+            $.ajax(this);
+        } else {
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.msg('连接服务器超时,请检查您的网络连接后重试')
+            });
         }
     }
 });
@@ -29,8 +42,10 @@ switch (action) {
             type: "POST",
             dataType: 'json',
             async: false,
-            timeout: 5000,
+            timeout: 2000,
             data: json,
+            tryCount: 0,
+            retryLimit: 5,
             success: function (result) {
                 let json = eval(result);
                 if (json['code'] === 100) {
@@ -77,8 +92,10 @@ switch (action) {
                                     url: './API/usrCenter.php',
                                     type: "POST",
                                     dataType: 'json',
-                                    timeout: 5000,
+                                    timeout: 2000,
                                     data: data,
+                                    tryCount: 0,
+                                    retryLimit: 5,
                                     success: function (result) {
                                         let json = eval(result);
                                         if (json['code'] === 100) {
@@ -89,10 +106,15 @@ switch (action) {
                                         })
                                     },
                                     error: function () {
-                                        layui.use('layer', function () {
-                                            let layer = layui.layer;
-                                            layer.alert('与服务器失去连接，请检查网络')
-                                        });
+                                        if (this.tryCount < this.retryLimit) {
+                                            this.tryCount++;
+                                            $.ajax(this);
+                                        } else {
+                                            layui.use('layer', function () {
+                                                let layer = layui.layer;
+                                                layer.msg('连接服务器超时,请检查您的网络连接后重试')
+                                            });
+                                        }
                                     }
                                 });
                             });
@@ -100,7 +122,15 @@ switch (action) {
                 }
             },
             error: function () {
-                layer.msg('与服务器失去连接，请检查网络')
+                if (this.tryCount < this.retryLimit) {
+                    this.tryCount++;
+                    $.ajax(this);
+                } else {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.msg('连接服务器超时,请检查您的网络连接后重试')
+                    });
+                }
             }
         });
         break;
@@ -131,7 +161,7 @@ switch (action) {
                     type: 2,
                     title: '充值',
                     content: './codepay/index.php',
-                    area: ['400px','400px'],
+                    area: ['400px', '400px'],
                     scrollbar: false
                 });
             });
@@ -146,8 +176,10 @@ switch (action) {
             url: 'API/usrCenter.php',
             type: "POST",
             dataType: 'json',
-            timeout: 5000,
+            timeout: 2000,
             data: billing,
+            tryCount: 0,
+            retryLimit: 5,
             success: function (result) {
                 let json = eval(result);
                 if (json['code'] === 100) {
@@ -195,10 +227,15 @@ switch (action) {
                 }
             },
             error: function () {
-                layui.use('layer', function () {
-                    let layer = layui.layer;
-                    layer.alert('与服务器失去连接，请检查网络')
-                });
+                if (this.tryCount < this.retryLimit) {
+                    this.tryCount++;
+                    $.ajax(this);
+                } else {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.msg('连接服务器超时,请检查您的网络连接后重试')
+                    });
+                }
             }
         });
         billing.type = 'billing-top';
@@ -206,8 +243,10 @@ switch (action) {
             url: 'API/usrCenter.php',
             type: "POST",
             dataType: 'json',
-            timeout: 5000,
+            timeout: 2000,
             data: billing,
+            tryCount: 0,
+            retryLimit: 5,
             success: function (result) {
                 let json = eval(result);
                 if (json['code'] === 100) {
@@ -228,10 +267,15 @@ switch (action) {
                 });
             },
             error: function () {
-                layui.use('layer', function () {
-                    let layer = layui.layer;
-                    layer.alert('与服务器失去连接，请检查网络')
-                });
+                if (this.tryCount < this.retryLimit) {
+                    this.tryCount++;
+                    $.ajax(this);
+                } else {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.msg('连接服务器超时,请检查您的网络连接后重试')
+                    });
+                }
             }
         });
         break;
