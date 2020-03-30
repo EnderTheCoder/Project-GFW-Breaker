@@ -17,4 +17,3 @@ $mysql = new mysql_core();
 $return = new return_core();
 $token = new token_core();
 $redis = new redis_core();
-echo md5('Make dBIg Money22' . ADMIN_SALT);
