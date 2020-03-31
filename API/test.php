@@ -1,19 +1,19 @@
 <?php
 
-header('Access-Control-Allow-Origin:*');
-header('Access-Control-Allow-Methods:POST');
-header('Content-Type:application/json; charset=utf-8');
-require 'config.php';
-require 'Core/DB/MySQL/mysql_core.php';
-require 'Core/Security/sign_core.php';
-require 'Core/Data/return_core.php';
-require 'Lib/LibSMTP.php';
-require 'Core/custom_functions.php';
-require 'Core/Security/token_core.php';
-require 'Core/DB/Redis/redis_core.php';
-session_start();
-$sign = new sign_core();
-$mysql = new mysql_core();
-$return = new return_core();
-$token = new token_core();
-$redis = new redis_core();
+function fib($n)
+{
+    if ($n == 1 || $n == 2)
+        return 1;
+    $a = 1;
+    $b = 1;
+    $c = 0;
+    for ($i = 3; $i <= $n; $i++) {
+        $c = $a + $b;
+        $a = $b;
+        $b = $c;
+    }
+    return $c;
+}
+
+echo "第一百个fibonacii数为:";
+echo fib(100);

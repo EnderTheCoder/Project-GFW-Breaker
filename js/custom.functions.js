@@ -60,7 +60,6 @@ function arrToObj(arr, isString) {
     for (let a = 0; a < arr.length; a++) {
         result[a] = arr[a];
     }
-
     return isString ? JSON.stringify(result) : result;
 }
 

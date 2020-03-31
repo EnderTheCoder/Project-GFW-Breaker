@@ -23,7 +23,7 @@ if (isEmpty($_POST['type']))
 switch ($_POST['type']) {
     case 'all':
     {
-        $sql = 'SELECT id, title, summary FROM main_blog WHERE visible = true';
+        $sql = 'SELECT id, title, summary FROM main_blog WHERE visible = true ORDER BY id DESC ';
         $result = $mysql->bind_query($sql);
         if ($result)
             $result['row'] = count($result);

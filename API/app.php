@@ -11,6 +11,7 @@ require 'Lib/LibSMTP.php';
 require 'Core/custom_functions.php';
 require 'Core/Security/token_core.php';
 require 'Core/DB/Redis/redis_core.php';
+require 'Core/Solution/formDataParser.php';
 session_start();
 $sign = new sign_core();
 $mysql = new mysql_core();

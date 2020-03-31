@@ -32,12 +32,12 @@ app_id1id用户名password密码timestamp1581952284typeloginssssssssss
 ```$xslt
 //json格式
 {
-    'id':'用户名',
-    'password':'密码',
-    'type': 'login',
-    'app_id':1,
-    'timestamp':1581952284,
-    'sign': '87E1B97DDE88324066AA3B61982BF2A6'
+    "id": "用户名",
+    "password": "密码",
+    "type": "login",
+    "app_id":1,
+    "timestamp":1581952284,
+    "sign": "87E1B97DDE88324066AA3B61982BF2A6"
 }
 
 //txt格式 (这里使用了另外一组数据,如果使用txt格式请注意url编码有效数据)

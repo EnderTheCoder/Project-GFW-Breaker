@@ -43,7 +43,7 @@ switch ($_POST['type']) {
 
     case 'billing-top':
     {
-        $sql = 'SELECT money, money_in, money_out FROM main_users WHERE uid = ?';
+        $sql = 'SELECT money, invite_tot, invite_token FROM main_users WHERE uid = ?';
         $params = array(1 => $_SESSION['uid']);
         $return->retMsg('success', $mysql->bind_query($sql, $params));
     }

@@ -24,8 +24,8 @@ $params = array(
     6 => $_POST['referer'],
     7 => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
 );
+if (adminStateCheck()) $return->retMsg('success');
 if ($token->sessionJudge()) $params[3] = $_SESSION['uid'];
-if (adminStateCheck()) $params[3] = 1;
 $mysql->bind_query($sql, $params);
 $sql = 'SELECT * FROM main_ip_log WHERE ip_addr = ?';
 $params = array(1 => getIP());

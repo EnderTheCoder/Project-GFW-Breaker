@@ -151,6 +151,10 @@ switch ($_POST['type']) {
         if ($result[0][$_POST['key']]) $return->retMsg('dupVal');
         $return->retMsg('success');
         break;
+    case 'invite-link':
+    {
+
+    }
     default:
         $return->retMsg('paramErr');
 }

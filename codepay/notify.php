@@ -26,14 +26,16 @@ require_once("codepay_config.php"); //导入配置文件
 require_once("includes/MysqliDb.class.php");//导入mysqli连接
 require_once("includes/M.class.php");//导入mysqli操作类
 
-function createLinkstring($data){
-    $sign='';
+function createLinkstring($data)
+{
+    $sign = '';
     foreach ($data AS $key => $val) {
         if ($sign) $sign .= '&'; //第一个字符串签名不加& 其他加&连接起来参数
-        $sign .= "$key=".urlencode($val); //拼接为url参数形式
+        $sign .= "$key=" . urlencode($val); //拼接为url参数形式
     }
     return $sign;
 }
+
 /**
  * 业务处理演示
  * @param $data 接收到的POST参数
@@ -155,9 +157,26 @@ function DemoHandle($data)
         //为用户充值demo 修改为自己业务请看上面方法
 
 
-        $price = $price * 1;//1表示比率为1:1  100则表示1元可充值100分;
-        $sql = "update `" . DB_USERTABLE . "` set " . DB_USERMONEY . "=" . DB_USERMONEY . "+{$price} where " . DB_USERNAME . "=?";
+        //和别人的垃圾代码的分界线
+        /* 由Ender于2020-03-31修改 */
+        require '../API/Core/DB/MySQL/mysql_core.php';
+        require '../API/Core/custom_functions.php';
+        $mysql = new mysql_core();
+        $price = round($price * getSetting('recharge_rating'), 2);//1表示比率为1:1  100则表示1元可充值100分;
+        if (!isEmpty($_SESSION['invite_token'])) {
+            if (!isEmpty($mysql->bind_query('SELECT uid FROM main_users WHERE invite_token = ?', $_SESSION['invite_token']))) {
+                $feedback = round($money * getSetting('invite_recharge_rating'), 2);
+                $params = array(
+                    1 => $feedback,
+                    2 => $_SESSION['invite_token'],
+                );
+                $price = round($price * getSetting('invite_recharge_rating'), 2);
+                $mysql->bind_query('UPDATE main_users SET money = money + ? WHERE invite_token = ?', $params);
+            }
+        }
+        //和别人的垃圾代码的分界线
 
+        $sql = "update `" . DB_USERTABLE . "` set " . DB_USERMONEY . "=" . DB_USERMONEY . "+{$price} where " . DB_USERNAME . "=?";
 
         //默认sql为：update `codepay_user` set money=money+{$price} where user=?
 
@@ -170,7 +189,7 @@ function DemoHandle($data)
 
         $stmt = $m->prepare($sql); //预编译SQL语句
 
-        if (empty($stmt)) return sprintf("%s SQL语句存在问题一般是参数修改不正确造成   SQL: %s 参数：%s ", $m->db->error,$sql, createLinkstring($data));
+        if (empty($stmt)) return sprintf("%s SQL语句存在问题一般是参数修改不正确造成   SQL: %s 参数：%s ", $m->db->error, $sql, createLinkstring($data));
 
         if ($stmt->error != '') { //捕获错误 这一般是数据表不存在造成
             $result = sprintf("数据表存在问题 ：%s SQL: %s 参数：%s ", $stmt->error, $sql, createLinkstring($data));
@@ -206,9 +225,9 @@ function DemoHandle($data)
             return 'ok'; //业务处理完成 。
 
         } else { //如果下次还要处理则应该开启事物 数据库引擎为InnoDB 不支持事物该笔订单是无法再执行到业务处理这个步骤除非是使用订单状态标识区分
-            $error_msg = $stmt->error?$stmt->error:$m->db->error;
+            $error_msg = $stmt->error ? $stmt->error : $m->db->error;
             if ($error_msg == '' && $stmt->affected_rows <= 0) {
-                $error_msg = htmlentities($pay_id).'该用户可能不存在 请核对 '.(DB_USERTABLE=='codepay_user'?'默认的演示只存在admin用户用于测试 需要你更改codepay_config.php 最下面3个参数为你的用户表信息':'');
+                $error_msg = htmlentities($pay_id) . '该用户可能不存在 请核对 ' . (DB_USERTABLE == 'codepay_user' ? '默认的演示只存在admin用户用于测试 需要你更改codepay_config.php 最下面3个参数为你的用户表信息' : '');
             }
             $result = sprintf("业务处理失败了 ：%s SQL: %s 参数：%s ", $error_msg, $sql, createLinkstring($data));
             $m->rollback();//回滚
@@ -352,7 +371,7 @@ if ((int)$codepay_config['go_time'] < 1) $codepay_config['go_time'] = 3;
         </div>
         <div class="amount" id="money">￥<?php echo $money; ?></div>
         <h1 class="text-center text-<?php echo($result != '支付成功' ? 'fail' : 'success'); ?>"><strong><i
-                    class="fa fa-check fa-lg"></i> <?php echo $result; ?></strong></h1>
+                        class="fa fa-check fa-lg"></i> <?php echo $result; ?></strong></h1>
         <?php echo($error_msg ? "以下错误信息关闭调试模式可隐藏：<div class='error text-left'>{$error_msg}</div>" : ''); ?>
         <div class="detail detail-open" id="orderDetail" style="display: block;">
             <dl class="detail-ct" id="desc">

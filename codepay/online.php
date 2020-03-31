@@ -49,9 +49,10 @@ function sendEmail($mailtitle, $mailcontent,$sendTo)
         exit();
     }
     echo "恭喜！邮件发送成功！！";
-
 }
 //sendEmail('测试发信', "测试测试哦","");
+
+/** @var ArrayAccess $codepay_config */
 
 if ($_GET['key'] != $codepay_config['key']) { //验证密钥
     DEBUG ? exit('密钥不对') : exit(0); //非调试模式情况不返回信息
@@ -78,7 +79,7 @@ $data = $_GET['data'];
 if ($line == 0) { //掉线
     sendEmail($typeName . '掉线了', "哎呦 {$typeName}掉线了不知道什么时候会上线","");
 } elseif ($line == 1) { //登录成功
-    sendEmail($typeName . '上线了', "哎呦 不错哦上线了不要我来管了"),"";
+    sendEmail($typeName . '上线了', "哎呦 不错哦上线了不要我来管了");
 } elseif ($line == 3) {// 需要手机扫码才能自动登录或获取账单 会有替代方案确保不影响业务处理
     sendEmail($typeName . '要扫码了', '等我有时间再说吧 现在没空、扫码需要的地址：' . $_GET['data'] . "<img src='http://codepay.fateqq.com:52888/showqrcode.html?{$_GET["data"]}'>","");
 }

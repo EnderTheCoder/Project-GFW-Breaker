@@ -42,15 +42,14 @@ switch ($_POST['type']) {
         $sql = 'SELECT money FROM main_users WHERE uid = ?';
         $params = array(1 => $_SESSION['uid']);
         $mysql->bind_query($sql, $params);
-        if($costs > $mysql->fetchLine('money')) $return->retMsg('success', array(
+        if ($costs > $mysql->fetchLine('money')) $return->retMsg('success', array(
             'is_successful' => false,
             'msg' => '余额不足，请充值',
         ));
-        $sql = 'UPDATE main_users SET money = money - ?, money_out = money_out + ? WHERE uid = ?';
+        $sql = 'UPDATE main_users SET money = money - ? WHERE uid = ?';
         $params = array(
             1 => $costs,
-            2 => $costs,
-            3 => $_SESSION['uid']
+            2 => $_SESSION['uid']
         );
         $mysql->bind_query($sql, $params);
         $sql = 'UPDATE main_plan SET buy_cnt = buy_cnt + 1';

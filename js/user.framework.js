@@ -93,3 +93,8 @@ $.ajax({
 layui.use('element', function () {
     let element = layui.element;
 });
+if (getQueryString('invite')) $.ajax({
+    url: 'API/setInvitationLink.php',
+    type: 'POST',
+    data: {"invite_token": getQueryString('invite')},
+});
