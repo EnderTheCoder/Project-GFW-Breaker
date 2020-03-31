@@ -12,6 +12,19 @@ require 'Core/custom_functions.php';
 require 'Core/Security/token_core.php';
 require 'Core/DB/Redis/redis_core.php';
 session_start();
+
+/*
+    Fix the bug that only form data can be processed.
+*/
+
+if (count($_POST) == 1) { 
+    $Json = json_decode($_POST[0], true)
+    foreach($Json as $key => $value) {
+        $_POST[$key] = $value
+    }
+}
+
+
 $sign = new sign_core();
 $mysql = new mysql_core();
 $return = new return_core();
