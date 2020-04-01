@@ -87,15 +87,14 @@ switch ($_POST['type']) {
         }
     }
 
-    case 'edit-vmess-group':
+    case 'edit-plan-vmess-group':
     {
 //        if (!adminStateCheck()) $return->retMsg('passErr');
-        if (isEmpty($_POST['id']) || isEmpty($_POST['key']) || isEmpty($_POST['value'])) $return->retMsg('emptyParam');
-        $sql = 'UPDATE main_vmess_group SET ? = ? WHERE id = ?';
+        if (isEmpty($_POST['id']) || isEmpty($_POST['value'])) $return->retMsg('emptyParam');
+        $sql = "UPDATE main_plan SET son = ? WHERE id = ?";
         $params = array(
-            1 => $_POST['key'],
-            2 => $_POST['value'],
-            3 => $_POST['id'],
+            1 => $_POST['value'],
+            2 => $_POST['id'],
         );
         $mysql->bind_query($sql, $params);
         $return->retMsg('success');

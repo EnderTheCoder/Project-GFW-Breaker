@@ -45,6 +45,15 @@ switch ($_POST['type']) {
             $mysql->bind_query($sql, $params);
             $return->retMsg('passErr');
         } else $mysql->bind_query($sql, $params);
+        $sql = 'UPDATE main_users SET latest_http_user_agent = ?, latest_ip = ? WHERE uid = ?';
+        $params = array(
+            1 => $_SERVER['HTTP_USER_AGENT'],
+            2 => getIP(),
+            3 => $result[0]['uid']
+        );
+        $mysql->bind_query($sql, $params);
+        if ((int)(time() / 86400) - (int)($result[0]['latest_invite_time'] / 86400))
+            $mysql->bind_query('UPDATE main_users SET daily_invite = 0 WHERE uid = ?');
         $token->session($result[0]['uid'], $result[0]['username']);
         $_SESSION['admin_session'] = null;
         $return->retMsg('success');
@@ -91,7 +100,7 @@ switch ($_POST['type']) {
         }
         $_COOKIE = null;
         if ($result[0][$_POST['key']]) $return->retMsg('dupVal');
-        $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time, money, multi_device) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO main_users(username, password, reg_ip, email, state, reg_time, money, multi_device, invite_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $params = array(
             1 => $_POST['username'],
             2 => md5($_POST['password'] . PASSWORD_SALT),
@@ -102,6 +111,7 @@ switch ($_POST['type']) {
             6 => time(),
             7 => getSetting('default_money'),
             8 => getSetting('default_device_limit'),
+            9 => md5(PASSWORD_SALT . time() . $_POST['username'])
         );
         $mysql->bind_query($sql, $params);
         $email_token = md5($_POST['username'] . rand() . time());

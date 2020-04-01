@@ -96,21 +96,14 @@
             $("input:checkbox[name='son']:checked").each(function (i) {
                 arr[i] = $(this).val();
             });
+            delete json.son;
             json.app_id = 3;
-            json.type = 'edit-plan';
-            json.key = 'son';
+            json.type = 'edit-plan-vmess-group';
             json.id = getQueryString('id');
             json.value = arrToObj(arr, true);
             json.timestamp = getUnixTS();
             //app_id id key timestamp type value
-            json.sign = $.md5(
-                'app_id' + json.app_id +
-                'id' + json.id +
-                'key' + json.key +
-                'timestamp' + json.timestamp +
-                'type' + json.type +
-                'value' + json.value +
-                'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
+            json.sign = $.md5('app_id' + json.app_id + 'id' + json.id + 'timestamp' + json.timestamp + 'type' + json.type + 'value' + json.value + 'c0d17cb5a0f5c1bd94aa59dcf4f57e93').toUpperCase();
             $.ajax({
                 url: '../API/admin.php',
                 type: "POST",

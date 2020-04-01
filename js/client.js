@@ -64,7 +64,7 @@ $.ajax({
         if (json['code'] === 100) {
             $(".version-board").append(json['data']);
             $(".download-btn").click(function () {
-                window.open('./download/GFW-Breaker_' + type + '_' + json['data'] + '.' + tail);
+                window.open('http://download.gfwbreaker.site/GFW-Breaker_' + type + '_' + json['data'] + '.' + tail);
             });
         } else layui.use('layer', function () {
             let layer = layui.layer;
