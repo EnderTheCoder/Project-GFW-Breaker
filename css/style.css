@@ -202,7 +202,6 @@ body {
 
 .cash-top div {
     height: 150px;
-    line-height: 150px;
     font-size: 30px;
     color: #cccccc;
     text-align: center;
@@ -363,4 +362,13 @@ body {
 
 #blog-content a {
     color: #1B9AF7;
+}
+
+.invite-link-border {
+    line-height: 50px;
+}
+
+#invite-link {
+    font-size: 20px;
+    word-break: break-all;
 }

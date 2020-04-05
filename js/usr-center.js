@@ -135,25 +135,67 @@ switch (action) {
         });
         break;
     case 'billing':
-        body.append('<div class="layui-container">\n' +
-            '    <div class="layui-row cash-top">\n' +
-            '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>余额：</span><span id="billing-a"></span><span>&nbsp;CNY</span>\n' +
-            '        </div>\n' +
-            '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>总账：</span><span id="billing-b"></span><span>&nbsp;CNY</span>\n' +
-            '        </div>\n' +
-            '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>支出：</span><span id="billing-c"></span><span>&nbsp;CNY</span>\n' +
-            '        </div>\n' +
-            '        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">\n' +
-            '            <span>收入：</span><span id="billing-d"></span><span>&nbsp;CNY</span>\n' +
-            '        </div>\n' +
-            '<button type="button" class="layui-btn layui-btn-fluid layui-btn-normal recharge-btn">充值</button>' +
-            '    </div>\n' +
-            '    <div class="layui-row billing-area">\n' +
-            '    </div>\n' +
-            '</div>');
+        let invite_settings;
+        let getSettings = {};
+        getSettings.app_id = 1;
+        getSettings.type = 'get-feedback';
+        getSettings.timestamp = getUnixTS();
+        getSettings.sign = $.md5('app_id1id' + getSettings.id + 'timestamp' + getSettings.timestamp + 'type' + getSettings.type + '6ab43fb5a4d624f9fa000bc83ccef011').toUpperCase();
+        $.ajax({
+            url: 'API/usrCenter.php',
+            type: "POST",
+            dataType: 'json',
+            timeout: 2000,
+            data: getSettings,
+            tryCount: 0,
+            retryLimit: 5,
+            success: function (result) {
+                invite_settings = eval(result)['data'];
+            },
+            error: function () {
+                if (this.tryCount < this.retryLimit) {
+                    this.tryCount++;
+                    $.ajax(this);
+                } else {
+                    layui.use('layer', function () {
+                        let layer = layui.layer;
+                        layer.msg('连接服务器超时,请检查您的网络连接后重试')
+                    });
+                }
+            }
+        });
+        body.append(`<div class="layui-container">
+            <div class="layui-row cash-top">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md6" style="
+    line-height: 150px">
+            <span>余额：</span><span id="billing-a"></span><span>&nbsp;CNY</span>
+            </div>
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md6 invite-link-border" style="line-height: 50px">
+            <span>邀请链接：</span><br><span id="invite-link"></span><button class="layui-btn layui-btn-normal invite-info" type="button">奖励说明</button>
+
+            </div>
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md6" style="
+    line-height: 150px">
+            <span>累计邀请：</span><span id="billing-b"></span><span>&nbsp;人</span>
+            </div>
+            <button type="button" class="layui-btn layui-btn-fluid layui-btn-normal recharge-btn">充值</button>
+            </div>
+            <div class="layui-row billing-area">
+            </div>
+            </div>`);
+        $(".invite-info").click(function () {
+            layui.use('layer', function () {
+                let layer = layui.layer;
+                layer.open({
+                    type: 1,
+                    title: '邀请用户注册奖励说明',
+                    content: '广大用户请注意,邀请你的朋友注册即可获取大量余额返利!发福利我们是认真的!' +
+                        '当前返利比例为:被邀请用户充值金额的' + Number(invite_settings['invite_feedback_rating'] * 100) + '%;' +
+                        '当前被邀请用户的充值倍率为' + Number(invite_settings['invite_recharge_rating'] * 100) + '%;' +
+                        '当前每日邀请用户上限为' + invite_settings['invite_daily_limit'] + '.'
+                });
+            });
+        });
         $(".recharge-btn").click(function () {
             layui.use('layer', function () {
                 let layer = layui.layer;
@@ -251,16 +293,8 @@ switch (action) {
                 let json = eval(result);
                 if (json['code'] === 100) {
                     $("#billing-a").html(json['data'][0]['money']);
-                    $("#billing-c").html(json['data'][0]['money_out']);
-                    $("#billing-d").html(json['data'][0]['money_in']);
-                    let b = $("#billing-b");
-                    if (json['data'][0]['money_in'] > json['data'][0]['money_out']) {
-                        b.html(json['data'][0]['money_in'] - json['data'][0]['money_out']);
-                        b.css('color', '#EE0033');
-                    } else {
-                        b.html(json['data'][0]['money_out'] - json['data'][0]['money_out']);
-                        b.css('color', '#00CC00');
-                    }
+                    $("#invite-link").html('http://' + window.location.host + '?invite=' + json['data'][0]['invite_token']);
+                    $("#billing-b").html(json['data'][0]['invite_tot']);
                 } else layui.use('layer', function () {
                     let layer = layui.layer;
                     layer.alert('奇怪的错误增加了!')

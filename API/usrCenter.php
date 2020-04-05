@@ -10,13 +10,13 @@ require 'Core/Data/return_core.php';
 require 'Lib/LibSMTP.php';
 require 'Core/custom_functions.php';
 require 'Core/Security/token_core.php';
-require 'Core/DB/Redis/redis_core.php';
+//require 'Core/DB/Redis/redis_core.php';
 session_start();
 $sign = new sign_core();
 $mysql = new mysql_core();
 $return = new return_core();
 $token = new token_core();
-$redis = new redis_core();
+//$redis = new redis_core();
 if (!$token->sessionJudge()) $return->setMsg('tokenFailed');
 if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
 switch ($_POST['type']) {
@@ -60,4 +60,13 @@ switch ($_POST['type']) {
         $return->retMsg('success');
     }
 
+    case 'get-feedback':
+    {
+        $array = array(
+            'invite_feedback_rating' => getSetting('invite_feedback_rating'),
+            'invite_recharge_rating' => getSetting('invite_recharge_rating'),
+            'invite_daily_limit' => getSetting('invite_daily_limit'),
+        );
+        $return->retMsg('success', $array);
+    }
 }

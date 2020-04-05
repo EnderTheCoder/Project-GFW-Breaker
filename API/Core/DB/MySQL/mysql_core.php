@@ -2,8 +2,17 @@
 
 class mysql_core
 {
+    const DB_HOST = 'localhost';
+
+    const DB_USERNAME = 'ender';
+
+    const DB_PASSWORD = 'Feng,HK,4778!';
+
+    const DB_NAME = 'GFW-Breaker';
+
     private $con;
-    private $isError = false, $ErrorMsg;
+    private $isError = false;
+    private $ErrorMsg;
     private $result;
     private $row;
 
@@ -17,8 +26,8 @@ class mysql_core
     private function connect()
     {
         if ($this->con != null) return $this->con;
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME;
-        $con = new pdo($dsn, DB_USERNAME, DB_PASSWORD);
+        $dsn = 'mysql:host=' . self::DB_HOST . ';dbname=' . self::DB_NAME;
+        $con = new pdo($dsn, self::DB_USERNAME, self::DB_PASSWORD);
         $this->con = $con;
         $con->query('set names utf8');
         return $this->con;

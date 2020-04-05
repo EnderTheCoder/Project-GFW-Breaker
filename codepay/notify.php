@@ -159,27 +159,29 @@ function DemoHandle($data)
 
         //和别人的垃圾代码的分界线
         /* 由Ender于2020-03-31修改 */
+        require '../API/config.php';
         require '../API/Core/DB/MySQL/mysql_core.php';
+        require '../API/Core/Data/return_core.php';
         require '../API/Core/custom_functions.php';
         $mysql = new mysql_core();
         $price = round($price * getSetting('recharge_rating'), 2);//1表示比率为1:1  100则表示1元可充值100分;
         if (!isEmpty($_SESSION['invite_token'])) {
-            if (!isEmpty($mysql->bind_query('SELECT uid FROM main_users WHERE invite_token = ?', $_SESSION['invite_token']))) {
-                $feedback = round($money * getSetting('invite_recharge_rating'), 2);
-                $params = array(
-                    1 => $feedback,
-                    2 => $_SESSION['invite_token'],
-                );
-                $price = round($price * getSetting('invite_recharge_rating'), 2);
-                $mysql->bind_query('UPDATE main_users SET money = money + ? WHERE invite_token = ?', $params);
+            if (!isEmpty($mysql->bind_query('SELECT uid, daily_invite FROM main_users WHERE invite_token = ?', $_SESSION['invite_token']))) {
+                if ($mysql->fetchLine('daily_invite') < getSetting('invite_daily_limit')) {
+                    $feedback = round($money * getSetting('invite_recharge_rating'), 2);
+                    $params = array(
+                        1 => $feedback,
+                        2 => time(),
+                        3 => $_SESSION['invite_token'],
+                    );
+                    $price = round($price * getSetting('invite_recharge_rating'), 2);
+                    $mysql->bind_query('UPDATE main_users SET money = money + ?, latest_invite_time = ? ,daily_invite = daily_invite + 1 , invite_tot = invite_tot + 1 WHERE invite_token = ?', $params);
+                }
             }
         }
         //和别人的垃圾代码的分界线
-
         $sql = "update `" . DB_USERTABLE . "` set " . DB_USERMONEY . "=" . DB_USERMONEY . "+{$price} where " . DB_USERNAME . "=?";
-
         //默认sql为：update `codepay_user` set money=money+{$price} where user=?
-
         //下面是另外一种操作SQL的做法 比较简单 适合写入自己的SQL业务语句
         //$rs = $m->execSQL( $sql, array('s', $pay_id), false); //false表示 查询 如果是要更改数据库返回是否成功应该为true
         //print_r($rs); 打印是否执行成功 或者返回查询结果

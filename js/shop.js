@@ -39,7 +39,7 @@ $.ajax({
                         <p><span>流量：</span>` + json['data'][i]['flow_limit'] + `GB/月</p>
                         <p><span>价格：</span>￥` + json['data'][i]['price'] + `/月</p>
                         <p><span>介绍：</span>` + json['data'][i]['info'] + `</p>
-                        <button type="button" class="layui-btn layui-btn-fluid" id="shop-buy-btn-` + json['data'][i]['id'] + `">购买</button>
+                        <button type="button" class="layui-btn layui-btn-fluid" id="shop-buy-btn-` + json['data'][i]['id'] + `">购买(` + json['data'][i]['buy_cnt'] + `/` + json['data'][i]['buy_limit'] + `)</button>
                     </div>
                 </div>
                 `);

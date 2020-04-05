@@ -9,20 +9,20 @@ require 'Core/Security/sign_core.php';
 require 'Core/Data/return_core.php';
 require 'Core/custom_functions.php';
 require 'Core/Security/token_core.php';
-require 'Core/DB/Redis/redis_core.php';
+//require 'Core/DB/Redis/redis_core.php';
 session_start();
 $sign = new sign_core();
 $mysql = new mysql_core();
 $return = new return_core();
 $token = new token_core();
-$redis = new redis_core();
+//$redis = new redis_core();
 $sign->initParams($_POST);
 if ($sign->checkSign() !== true) $return->retMsg($sign->checkSign());
 if (isEmpty($_POST['type'])) $return->retMsg('emptyParam');
 switch ($_POST['type']) {
     case 'get-plan':
     {
-        $sql = 'SELECT id, `name`, price, flow_limit, info FROM main_plan';
+        $sql = 'SELECT id, `name`, price, flow_limit, info, buy_cnt, buy_limit FROM main_plan WHERE buy_cnt < buy_limit AND usable = 1 order by id DESC ';
         $mysql->bind_query($sql);
         $return->retMsg('success', $mysql->fetch(true));
     }
@@ -30,6 +30,7 @@ switch ($_POST['type']) {
     {
         if (!$token->sessionJudge()) $return->setMsg('tokenFailed');
         if (isEmpty($_POST['id']) || isEmpty($_POST['month'])) $return->retMsg('emptyParam');
+        $discount = 1;
         if ($_POST['month'] < 3) $discount = getSetting('global_discount');
         if ($_POST['month'] == 12) $discount = getSetting('whole_year_discount');
         if ($_POST['month'] >= 3 && $_POST['month'] < 6) $discount = getSetting('season_discount');
